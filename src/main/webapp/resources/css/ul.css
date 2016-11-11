@@ -1,0 +1,106 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+
+
+}
+
+.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+.my {
+    background: #7d807a;
+    color: #f0f0f0;
+    font-weight: bold;
+    font-family:Arial;
+    text-transform: uppercase;
+}
+
+.ex1 {
+    margin-top: 2cm;
+}
+
+.a  {
+    color: #fdfdff;
+    text-decoration: none;
+}
+
+/*a:hover,*/
+/*a:focus {*/
+    /*color: #fdfdff;*/
+    /*text-decoration: underline;*/
+/*}*/
+#example {overflow:scroll; height:300px; border:#999 solid 1px; }
+
+.a:hover {
+}
+
+
+.equal-width-cols {
+    width: 100%;
+    table-layout: fixed;
+}
+.equal-width-cols td {
+    width: auto;
+}
+
+.gg{
+    background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+    background: linear-gradient(to right, #25c481, #25b7c4);
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.g5 {
+    background: #7d807a;
+    color: #f0f0f0;
+    font-weight: bold;
+    font-family:Arial;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.g6 {
+    font-size: 19px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.g4 {
+    background-color: #A28108
+}

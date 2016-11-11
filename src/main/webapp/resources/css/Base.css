@@ -1,0 +1,203 @@
+html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
+/* Extract from normalize.css by Nicolas Gallagher and Jonathan Neal git.io/normalize */
+html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
+html,body{font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5}html{overflow-x:hidden}
+
+.equal-width-cols {
+    width: 100%;
+    table-layout: fixed;
+}
+.equal-width-cols td {
+    width: auto;
+}
+
+
+.lead {
+    margin-bottom:20px;font-size:16px;font-weight:300;line-height:1.4
+}
+table {
+
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    table-layout: fixed;
+    text-align: left;
+    padding: 7px;
+
+
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+
+
+}
+
+.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+.my {
+    background: #7d807a;
+    color: #f0f0f0;
+    font-weight: bold;
+    font-family:Arial;
+    text-transform: uppercase;
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    /*margin: 8px 0;*/
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.myselect {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.mysubmit {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    /*margin: 8px 0;*/
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    /*margin: 8px 0;*/
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.g5 {
+    background: #7d807a;
+    color: #f0f0f0;
+    font-weight: bold;
+    font-family:Arial;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.g6 {
+    font-size: 19px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/*div {*/
+    /*border-radius: 5px;*/
+    /*background-color: #f2f2f2;*/
+    /*!*padding: 20px;*!*/
+/*}*/
+
+
+
+
+.inset {
+    background-color: #565656;
+    color: transparent;
+    text-shadow: 0px 2px 3px rgba(255,255,255,0.5);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+}
+
+
+#example {overflow:scroll; height:350px; border:#999 solid 1px; }
+
+.btn-info {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+/*h1 { color: #c9d0d4; font-family: 'Helvetica Neue', sans-serif; font-size: 24px; font-weight: 100; line-height: 50px; letter-spacing: 1px; padding: 0 0 40px; border-bottom: double #555; }*/
