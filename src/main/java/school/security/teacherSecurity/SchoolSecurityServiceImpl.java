@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by Cheshire on 09.10.2016.
+ * Created by ArslanovDamir on 09.10.2016.
  */
 @Service
 public class SchoolSecurityServiceImpl implements SchoolSecurityService {

@@ -13,7 +13,7 @@ import school.service.interfaces.NoticeService;
 import java.util.List;
 
 /**
- * Created by Cheshire on 19.10.2016.
+ * Created by ArslanovDamir on 19.10.2016.
  */
 @Service
 public class NoticeServiceImpl implements NoticeService {

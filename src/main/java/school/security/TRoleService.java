@@ -3,7 +3,7 @@ package school.security;
 import java.util.List;
 
 /**
- * Created by Cheshire on 09.10.2016.
+ * Created by ArslanovDamir on 09.10.2016.
  */
 public interface TRoleService {
 

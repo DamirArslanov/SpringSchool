@@ -12,7 +12,7 @@ import school.service.interfaces.SubjectService;
 import java.util.List;
 
 /**
- * Created by Cheshire on 26.09.2016.
+ * Created by ArslanovDamir on 26.09.2016.
  */
 @Service
 public class SubjectServiceImpl implements SubjectService {

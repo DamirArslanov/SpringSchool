@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Cheshire on 19.10.2016.
+ * Created by ArslanovDamir on 19.10.2016.
  */
 @Controller
 public class NoticeController {
@@ -40,7 +40,6 @@ public class NoticeController {
     public void setTeacherService(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
-
 
     @RequestMapping(value = "/work/notice/add/{classID}", method = RequestMethod.GET)
     public String addNoticeGet(@PathVariable("classID") int classID, Model model) {

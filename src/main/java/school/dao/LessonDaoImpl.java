@@ -18,7 +18,7 @@ import javax.persistence.NoResultException;
 import java.util.*;
 
 /**
- * Created by Cheshire on 01.10.2016.
+ * Created by ArslanovDamir on 01.10.2016.
  */
 @Repository
 public class LessonDaoImpl implements LessonDao {

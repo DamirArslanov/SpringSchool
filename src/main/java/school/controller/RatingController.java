@@ -24,7 +24,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * Created by Cheshire on 28.09.2016.
+ * Created by ArslanovDamir on 28.09.2016.
  */
 @Controller
 public class RatingController {
@@ -38,15 +38,12 @@ public class RatingController {
 
 
     private RatingService ratingService;
-
     @Autowired(required = true)
     public void setRatingService(RatingService ratingService) {
         this.ratingService = ratingService;
     }
 
-
     private ChildrenService childrenService;
-
     @Autowired(required = true)
     public void setChildrenService(ChildrenService childrenService) {
         this.childrenService = childrenService;

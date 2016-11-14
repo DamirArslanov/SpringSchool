@@ -24,9 +24,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-
 /**
- * Created by Cheshire on 01.10.2016.
+ * Created by ArslanovDamir on 01.10.2016.
  */
 @Controller
 public class LessonController {

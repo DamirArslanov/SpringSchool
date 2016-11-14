@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.security.SecureRandom;
 
 /**
- * Created by Cheshire on 16.10.2016.
+ * Created by ArslanovDamir on 16.10.2016.
  */
 @Component
 public class Generator {

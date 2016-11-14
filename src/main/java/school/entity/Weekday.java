@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by Cheshire on 27.09.2016.
+ * Created by ArslanovDamir on 27.09.2016.
  *
  */
 @Component

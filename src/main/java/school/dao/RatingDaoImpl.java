@@ -15,7 +15,7 @@ import school.utils.DateUtil;
 import java.util.*;
 
 /**
- * Created by Cheshire on 28.09.2016.
+ * Created by ArslanovDamir on 28.09.2016.
  */
 @Repository
 public class RatingDaoImpl implements RatingDao {

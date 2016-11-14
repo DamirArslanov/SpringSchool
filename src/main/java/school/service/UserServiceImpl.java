@@ -12,7 +12,7 @@ import school.service.interfaces.UserService;
 import java.util.List;
 
 /**
- * Created by Cheshire on 16.10.2016.
+ * Created by ArslanovDamir on 16.10.2016.
  */
 @Service
 public class UserServiceImpl implements UserService {

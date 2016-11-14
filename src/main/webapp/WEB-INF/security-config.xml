@@ -10,7 +10,6 @@
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
 
-
     <http  auto-config="true" use-expressions="true">
         <form-login login-page="/login" default-target-url="/log" authentication-failure-url="/login?error"
                     username-parameter="username" password-parameter="password"/>

@@ -17,7 +17,7 @@ import java.util.List;
 
 
 /**
- * Created by Cheshire on 23.09.2016.
+ * Created by ArslanovDamir on 23.09.2016.
  */
 @Repository
 public class ImageDaoImpl implements ImageDao {

@@ -11,7 +11,6 @@
 
     <context:component-scan base-package="school.controller"/>
 
-
     <mvc:resources mapping="/resources/*" location="/resources/" />
 
     <mvc:annotation-driven/>

@@ -5,7 +5,7 @@ import school.entity.Teacher;
 import java.util.Date;
 
 /**
- * Created by Cheshire on 17.10.2016.
+ * Created by ArslanovDamir on 17.10.2016.
  */
 public class SearchForm {
 

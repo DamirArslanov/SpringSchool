@@ -8,7 +8,7 @@ import school.entity.Weekday;
 import java.util.List;
 
 /**
- * Created by Cheshire on 27.09.2016.
+ * Created by ArslanovDamir on 27.09.2016.
  */
 public interface WeekdayDao {
 

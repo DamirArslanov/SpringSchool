@@ -12,7 +12,7 @@ import school.entity.Teacher;
 import java.util.List;
 
 /**
- * Created by Cheshire on 19.10.2016.
+ * Created by ArslanovDamir on 19.10.2016.
  */
 @Repository
 public class NoticeDaoImpl implements NoticeDao {

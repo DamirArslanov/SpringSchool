@@ -31,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Created by Cheshire on 23.09.2016.
+ * Created by ArslanovDamir on 23.09.2016.
  */
 @Controller
 public class ChildrenController {
@@ -175,7 +175,6 @@ public class ChildrenController {
 
     @RequestMapping(value = "/work/classfill/add", method = RequestMethod.POST)
     public String addChildrenInsideClassfill(@ModelAttribute("children") Children children, BindingResult bindingResult) {
-
 
         if (bindingResult.hasErrors()) {
             return "childrens";

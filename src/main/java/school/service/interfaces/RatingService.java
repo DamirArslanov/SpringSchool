@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Cheshire on 28.09.2016.
+ * Created by ArslanovDamir on 28.09.2016.
  */
 public interface RatingService {
 

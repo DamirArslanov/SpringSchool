@@ -30,12 +30,10 @@ import java.beans.PropertyEditorSupport;
 import java.util.*;
 
 /**
- * Created by Cheshire on 19.09.2016.
+ * Created by ArslanovDamir on 19.09.2016.
  */
 @Controller
 public class TeacherController {
-
-
 
     CommonsMultipartResolver multipartResolver;
     @Autowired

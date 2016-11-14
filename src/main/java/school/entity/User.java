@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Created by Cheshire on 15.10.2016.
+ * Created by ArslanovDamir on 15.10.2016.
  */
 @Component
 @Entity

@@ -12,7 +12,7 @@ import school.service.interfaces.WeekdayService;
 import java.util.List;
 
 /**
- * Created by Cheshire on 27.09.2016.
+ * Created by ArslanovDamir on 27.09.2016.
  */
 @Service
 public class WeekdayServiceImpl implements WeekdayService {

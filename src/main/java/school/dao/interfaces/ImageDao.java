@@ -7,7 +7,7 @@ import school.entity.Image;
 import java.util.List;
 
 /**
- * Created by Cheshire on 23.09.2016.
+ * Created by ArslanovDamir on 23.09.2016.
  */
 public interface ImageDao {
 

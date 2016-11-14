@@ -11,7 +11,7 @@ import school.entity.Weekday;
 import java.util.List;
 
 /**
- * Created by Cheshire on 27.09.2016.
+ * Created by ArslanovDamir on 27.09.2016.
  */
 @Repository
 public class WeekdayDaoImpl implements WeekdayDao {
@@ -22,7 +22,6 @@ public class WeekdayDaoImpl implements WeekdayDao {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
 
 
     @Override

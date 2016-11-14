@@ -20,7 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created by Cheshire on 26.09.2016.
+ * Created by ArslanovDamir on 26.09.2016.
  */
 @Controller
 public class ScheduleController {
@@ -173,8 +173,6 @@ public class ScheduleController {
         this.scheduleService.removeSchedule(id);
         return "redirect:/work/timetable/" + classID;
     }
-
-
 
 
     @RequestMapping(value = "/admin/schedules", method = RequestMethod.POST)

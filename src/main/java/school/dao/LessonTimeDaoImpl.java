@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Cheshire on 07.11.2016.
+ * Created by ArslanovDamir on 07.11.2016.
  */
 @Repository
 public class LessonTimeDaoImpl implements LessonTimeDao {

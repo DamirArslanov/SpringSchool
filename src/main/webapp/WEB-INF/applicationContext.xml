@@ -14,7 +14,6 @@
 
     <context:annotation-config />
 
-
     <task:annotation-driven/>
 
     <import resource="data-config.xml"/>

@@ -15,7 +15,7 @@ import school.service.interfaces.TeacherService;
 import java.util.List;
 
 /**
- * Created by Cheshire on 19.09.2016.
+ * Created by ArslanovDamir on 19.09.2016.
  */
 @Service
 public class SchoolClassServiceImpl implements SchoolClassService {

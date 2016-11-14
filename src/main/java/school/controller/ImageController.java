@@ -19,7 +19,7 @@ import java.io.*;
 import java.sql.SQLException;
 
 /**
- * Created by Cheshire on 23.09.2016.
+ * Created by ArslanovDamir on 23.09.2016.
  */
 @Controller
 public class ImageController {
@@ -51,7 +51,6 @@ public class ImageController {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
-
         try {
             response.setHeader("Content-Disposition", "inline;filename=\"" +image.getName()+ "\"");
             OutputStream out = response.getOutputStream();

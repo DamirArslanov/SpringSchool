@@ -6,7 +6,7 @@ import school.entity.User;
 import java.util.List;
 
 /**
- * Created by Cheshire on 16.10.2016.
+ * Created by ArslanovDamir on 16.10.2016.
  */
 public interface UserDao {
 

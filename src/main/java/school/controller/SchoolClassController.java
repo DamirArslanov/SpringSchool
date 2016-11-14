@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Cheshire on 21.09.2016.
+ * Created by ArslanovDamir on 21.09.2016.
  */
 @Controller
 public class SchoolClassController {
@@ -84,7 +84,6 @@ public class SchoolClassController {
         children.setSchoolClass(schoolClass);
         return "classinfo";
     }
-
 
 
     @RequestMapping(value = "/work/classinfo", method = RequestMethod.GET)

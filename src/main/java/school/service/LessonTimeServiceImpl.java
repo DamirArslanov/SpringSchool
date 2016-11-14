@@ -10,7 +10,7 @@ import school.service.interfaces.LessonTimeService;
 import java.util.List;
 
 /**
- * Created by Cheshire on 07.11.2016.
+ * Created by ArslanovDamir on 07.11.2016.
  */
 @Service
 public class LessonTimeServiceImpl implements LessonTimeService {

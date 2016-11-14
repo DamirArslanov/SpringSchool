@@ -22,21 +22,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
- * Created by Cheshire on 10.10.2016.
+ * Created by ArslanovDamir on 10.10.2016.
  */
 @Controller
 public class AdminController {
 
     private TeacherService teacherService;
 
-    @Autowired(required = true)
+    @Autowired
     public void setTeacherService(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
 
 
     private LessonTimeService lessonTimeService;
-
     @Autowired
     public void setLessonTimeService(LessonTimeService lessonTimeService) {
         this.lessonTimeService = lessonTimeService;

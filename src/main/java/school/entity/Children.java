@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
- * Created by Cheshire on 19.09.2016.
+ * Created by ArslanovDamir on 19.09.2016.
  */
 @Component
 @Entity

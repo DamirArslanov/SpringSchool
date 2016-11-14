@@ -7,7 +7,7 @@ import school.entity.Teacher;
 import java.util.List;
 
 /**
- * Created by Cheshire on 19.09.2016.
+ * Created by ArslanovDamir on 19.09.2016.
  */
 public interface TeacherService {
 

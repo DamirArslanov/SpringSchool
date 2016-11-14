@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Cheshire on 09.10.2016.
+ * Created by ArslanovDamir on 09.10.2016.
  */
 @Service("schoolDetailsServiceImpl")
 public class SchoolDetailsServiceImpl implements UserDetailsService {

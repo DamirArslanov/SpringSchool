@@ -14,7 +14,7 @@ import school.utils.Generator;
 import java.util.List;
 
 /**
- * Created by Cheshire on 16.10.2016.
+ * Created by ArslanovDamir on 16.10.2016.
  */
 @Component
 public class UserDaoImpl implements UserDao {

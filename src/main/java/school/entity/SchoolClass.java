@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * Created by Cheshire on 19.09.2016.
+ * Created by ArslanovDamir on 19.09.2016.
  */
 @Component
 @Entity

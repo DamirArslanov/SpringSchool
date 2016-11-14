@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Cheshire on 01.10.2016.
+ * Created by ArslanovDamir on 01.10.2016.
  */
 @Service
 public class LessonServiceImpl implements LessonService {

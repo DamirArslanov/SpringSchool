@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 
 /**
- * Created by Cheshire on 07.11.2016.
+ * Created by ArslanovDamir on 07.11.2016.
  */
 @Component
 @Entity
