@@ -23,7 +23,7 @@ public interface LessonService {
 
     public List<Lesson> listLessons();
 
-    public void createLessonBySchedule(Schedule schedule);
+//    public void createLessonBySchedule(Schedule schedule);
 
     public List<Lesson> getLessonsByTeacher(String teacherUsername);
 

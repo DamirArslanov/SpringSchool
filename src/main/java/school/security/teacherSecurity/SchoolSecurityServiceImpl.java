@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * Created by Cheshire on 09.10.2016.
  */
 @Service
-public class TeacherSecurityServiceImpl implements TeacherSecurityService {
+public class SchoolSecurityServiceImpl implements SchoolSecurityService {
 
 
     private AuthenticationManager authenticationManager;
@@ -27,12 +27,9 @@ public class TeacherSecurityServiceImpl implements TeacherSecurityService {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    public void setUserDetailsService(@Qualifier("teacherDetailsServiceImpl") UserDetailsService userDetailsService) {
+    public void setUserDetailsService(@Qualifier("schoolDetailsServiceImpl") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
-
-
-
 
 
     @Override
@@ -53,10 +50,7 @@ public class TeacherSecurityServiceImpl implements TeacherSecurityService {
 
         if (usernamePasswordAuthenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            System.out.println("************ФАБРИКА АУТЕНТИФИКАЦИИ ОТКРЫТА!***************");
             System.out.println("************АУТЕНТИФИКАЦИЯ ПРОШЛА УСПЕШНО!***************");
-            System.out.println("************ФАБРИКА АУТЕНТИФИКАЦИИ ЗАКРЫТА!***************");
-
         }else System.out.println("************АУТЕНТИФИКАЦИЯ ПРОШЛА НЕУДАЧНО!***************");
 
     }

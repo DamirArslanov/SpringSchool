@@ -10,6 +10,8 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfTable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
+import school.entity.Children;
+import school.entity.Teacher;
 import school.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +38,9 @@ public class PDFCreator extends AbstractPdfView {
         BaseFont baseFont = BaseFont.createFont(FONT, BaseFont.IDENTITY_H, true);
         Font font = new Font(baseFont, 12, Font.NORMAL);
 
-        Set<User> users = (Set<User>) model.get("users");
+
+        List<Children> childrens = (List<Children>) model.get("childrens");
+        List<Teacher> teachers = (List<Teacher>) model.get("teachers");
         PdfPTable table = new PdfPTable(3);
 
         PdfPCell header1 = new PdfPCell(new Phrase("Имя", font));
@@ -52,17 +56,34 @@ public class PDFCreator extends AbstractPdfView {
 
 
 
+        if (childrens != null) {
+            for (Children children : childrens) {
+                if (children.getParent() != null) {
+                    table.addCell(header1);;
+                    table.addCell(header2);
+                    table.addCell(header3);
 
-        for (User user : users) {
-            table.addCell(header1);;
-            table.addCell(header2);
-            table.addCell(header3);
-            table.addCell(new Phrase(user.getParentName(), font));
-            table.addCell(new Phrase(user.getUsername(), font));
-            table.addCell(new Phrase(user.getPassword(), font));
-            table.addCell(cutLine);
-//            table.addCell(user.getUsername());
+                    table.addCell(new Phrase(children.getFIO(), font));
+                    table.addCell(new Phrase(children.getParent().getUsername(), font));
+                    table.addCell(new Phrase(children.getParent().getPassword(), font));
+                    table.addCell(cutLine);
+                }
+            }
         }
+
+        if (teachers != null) {
+            for (Teacher teacher : teachers) {
+                    table.addCell(header1);;
+                    table.addCell(header2);
+                    table.addCell(header3);
+
+                    table.addCell(new Phrase(teacher.getFIO(), font));
+                    table.addCell(new Phrase(teacher.getUsername(), font));
+                    table.addCell(new Phrase(teacher.getPassword(), font));
+                    table.addCell(cutLine);
+            }
+        }
+
         document.add(table);
     }
 }

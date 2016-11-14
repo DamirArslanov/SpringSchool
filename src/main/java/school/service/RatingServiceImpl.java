@@ -63,8 +63,8 @@ public class RatingServiceImpl implements RatingService {
     @Transactional
 //    @PreAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')")
     @PostAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN') or isAuthenticated() and principal.getUsername() == returnObject.get(0).children.parent.username")
-    public List<Rating> getRatingsByChildren(int childrenID) {
-        return this.ratingDao.getRatingsByChildren(childrenID);
+    public List<Rating> getRatingsByChildren(int childrenID, Date date) {
+        return this.ratingDao.getRatingsByChildren(childrenID, date);
     }
 
 

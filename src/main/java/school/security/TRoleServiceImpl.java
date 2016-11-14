@@ -13,7 +13,6 @@ import java.util.List;
 public class TRoleServiceImpl implements TRoleService {
 
     private TRoleDao tRoleDao;
-
     @Autowired
     public void settRoleDao(TRoleDao tRoleDao) {
         this.tRoleDao = tRoleDao;

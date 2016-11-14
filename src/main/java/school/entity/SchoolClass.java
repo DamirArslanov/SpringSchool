@@ -22,15 +22,6 @@ public class SchoolClass {
     @Column(name = "className", nullable = false)
     String class_name;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "class")
-//    List<Children> scholar = new ArrayList<Children>();
-
-    //@OneToOne(fetch = FetchType.EAGER, mappedBy = "schoolClass", cascade = CascadeType.ALL)
-
-
-
-//    @JoinTable(name = "class", joinColumns = @JoinColumn(name = "ID_SCHOOLCLASS"),
-//            inverseJoinColumns = @JoinColumn(name = "ID_TEACHER"))
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacherId")
     Teacher teacher;
@@ -40,13 +31,6 @@ public class SchoolClass {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "schoolClass")
     List<Notice> notices;
-
-
-
-
-
-
-
 
     public SchoolClass() {
     }

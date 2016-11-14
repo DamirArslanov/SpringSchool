@@ -24,7 +24,7 @@ public interface RatingService {
 
     public Rating getRatingById(int id);
 
-    public List<Rating> getRatingsByChildren(int childrenID);
+    public List<Rating> getRatingsByChildren(int childrenID, Date date);
 
     public List<Rating> listRatings();
 

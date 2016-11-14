@@ -14,9 +14,9 @@ import java.util.List;
 @Repository
 public class TRoleDaoImpl implements TRoleDao {
 
-    @Autowired
-    public SessionFactory sessionFactory;
 
+    public SessionFactory sessionFactory;
+    @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -33,12 +33,8 @@ public class TRoleDaoImpl implements TRoleDao {
     public TRole getTRoleByName(String roleName) {
         Session session = this.sessionFactory.getCurrentSession();
         String hql = "FROM TRole troles WHERE troles.role = (:roleName)";
-        System.out.println("************ФАБРИКА СОЗДАНИЯ ОДНОЙ РОЛИ ОТКРЫТА!***************");
         Query query = session.createQuery(hql).setParameter("roleName", roleName);
         TRole tRole = (TRole) query.getSingleResult();
-        System.out.println("************ФАБРИКА ГОВОРИТ!***************");
-        System.out.println("РОЛЬ: " + tRole.getRole());
-        System.out.println("************ФАБРИКА НЕГОВОРИТ!***************");
         return tRole;
     }
 

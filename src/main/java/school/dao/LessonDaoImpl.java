@@ -23,23 +23,23 @@ import java.util.*;
 @Repository
 public class LessonDaoImpl implements LessonDao {
 
-    @Autowired
-    ScheduleDao scheduleDao;
 
+    ScheduleDao scheduleDao;
+    @Autowired
     public void setScheduleDao(ScheduleDao scheduleDao) {
         this.scheduleDao = scheduleDao;
     }
 
-    @Autowired
-    private DateUtil dateUtil;
 
+    private DateUtil dateUtil;
+    @Autowired
     public void setDateUtil(DateUtil dateUtil) {
         this.dateUtil = dateUtil;
     }
 
-    @Autowired
-    private SessionFactory sessionFactory;
 
+    private SessionFactory sessionFactory;
+    @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -63,7 +63,6 @@ public class LessonDaoImpl implements LessonDao {
         if (lesson != null) {
             session.delete(lesson);
         }
-
     }
 
     @Override
@@ -75,10 +74,8 @@ public class LessonDaoImpl implements LessonDao {
 
     @Override
     public List<Lesson> listLessons() {
-        System.out.println("****************ФАБРИКА ЛЕКЦИИ ОТКРЫТА*************************");
         Session session = this.sessionFactory.getCurrentSession();
         List<Lesson> lessonList = session.createQuery("FROM Lesson").list();
-        System.out.println("****************ФАБРИКА ЗАКРЫТА*************************");
         return lessonList;
     }
 
@@ -87,8 +84,6 @@ public class LessonDaoImpl implements LessonDao {
         Session session = this.sessionFactory.getCurrentSession();
         Date date = new Date();
         Lesson lesson = new Lesson();
-//        String hql = "FROM Lesson lesson WHERE lesson.less_id = (:lessonid)";
-
         String hql2 = "FROM Lesson lesson WHERE lesson.less_Date = (:date) AND lesson.schedule.id = (:scheduleid)";
         Query query = session.createQuery(hql2).setParameter("date", date).setParameter("scheduleid", schedule.getShed_id());
         if (!query.list().isEmpty()) {
@@ -121,8 +116,6 @@ public class LessonDaoImpl implements LessonDao {
         return lessons;
     }
 
-   //
-    //.setParameter("startDate", startDate).setParameter("endDate", endDate)
 
     @Override
     public void createWeekLessons() {
@@ -149,11 +142,15 @@ public class LessonDaoImpl implements LessonDao {
         if (!allUsedScheduleList.isEmpty()) {
            allScheduleList.removeAll(allUsedScheduleList);
         }
+        Set<Schedule> scheduleSet = new LinkedHashSet<>();
+        for (Schedule schedule : allScheduleList) {
+            scheduleSet.add(schedule);
+        }
 
         //И само создание уроков-лекции из расписания и даты требуемой недели
         for (Date date : dates) {
             int dayNumber = this.dateUtil.giveMeWeekNumberOnDate(date);
-            for (Schedule schedule : allScheduleList) {
+            for (Schedule schedule : scheduleSet) {
                 if (schedule.getWeekday().getWeek_id() == dayNumber){
                     Lesson lesson = new Lesson();
                     lesson.setSchedule(schedule);
@@ -176,13 +173,13 @@ public class LessonDaoImpl implements LessonDao {
         } else {
             dates = dateUtil.giveMeThisWeekDays();
         }
-
         Date startDate = dates.get(0);
         Date endDate = dates.get(dates.size() - 1);
         //Найдем все объекты-расписания по классу
         String request = "FROM Schedule schedule WHERE schedule.schoolClass.class_id = (:classID)";
         Query query = session.createQuery(request).setParameter("classID", classID);
         List<Schedule> allScheduleList = query.list();
+
 
         //Найдем все уроки по этому расписанию
         String request1 = "FROM Lesson lesson WHERE lesson.schedule.schoolClass.class_id = (:classID) AND lesson.less_Date BETWEEN (:startDate) AND (:endDate)";
@@ -198,7 +195,11 @@ public class LessonDaoImpl implements LessonDao {
             for (Lesson lesson : lessonList) {
                 if (lesson.getSchedule().getShed_id() == schedule.getShed_id()) {
                     lesson.setSchedule(schedule);
-                    lesson.setLess_Date(this.dateUtil.setLessonTime(dateUtil.getDateByWeekNumber(schedule.getWeekday().getWeek_id()), schedule));
+                    if (future == true) {
+                        lesson.setLess_Date(this.dateUtil.setLessonTime(dateUtil.getFutureDateByWeekNumber(schedule.getWeekday().getWeek_id()), schedule));
+                    } else {
+                        lesson.setLess_Date(this.dateUtil.setLessonTime(dateUtil.getDateByWeekNumber(schedule.getWeekday().getWeek_id()), schedule));
+                    }
                     session.update(lesson);
                     used.add(schedule);
                 }
@@ -209,6 +210,7 @@ public class LessonDaoImpl implements LessonDao {
         if (!used.isEmpty()) {
             allScheduleList.removeAll(used);
         }
+
         for (Date date : dates) {
             int dayNumber = this.dateUtil.giveMeWeekNumberOnDate(date);
             for (Schedule schedule : allScheduleList) {

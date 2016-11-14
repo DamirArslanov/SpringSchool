@@ -24,22 +24,19 @@ import java.util.Date;
 public class NoticeController {
 
     private NoticeService noticeService;
-
     @Autowired
     public void setNoticeService(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 
     private SchoolClassService schoolClassService;
-
     @Autowired
     public void setSchoolClassService(SchoolClassService schoolClassService) {
         this.schoolClassService = schoolClassService;
     }
 
     private TeacherService teacherService;
-
-    @Autowired(required = true)
+    @Autowired
     public void setTeacherService(TeacherService teacherService) {
         this.teacherService = teacherService;
     }

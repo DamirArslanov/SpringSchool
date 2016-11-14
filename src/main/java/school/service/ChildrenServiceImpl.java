@@ -20,15 +20,10 @@ import java.util.List;
 public class ChildrenServiceImpl implements ChildrenService {
 
     private ChildrenDao childrenDao;
-
     @Autowired
     public void setChildrenDao(ChildrenDao childrenDao) {
         this.childrenDao = childrenDao;
     }
-
-
-
-
 
 
 

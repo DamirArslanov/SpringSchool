@@ -36,20 +36,16 @@ import java.util.*;
 @Controller
 public class ChildrenController {
 
-
-    //Нельзя добавлять здесь учителя напрямую. Иначе можно прописать левого учителя != учителю класса.
-    // Лучше взять id учителя (имя? + ссылка на неё ${} ) из класса и просто вывести его в доп. столбце. Верно?
-
     private SchoolClassService schoolClassService;
 
-    @Autowired(required = true)
+    @Autowired
     public void setSchoolClassService(SchoolClassService schoolClassService) {
         this.schoolClassService = schoolClassService;
     }
 
     private TeacherService teacherService;
 
-    @Autowired(required = true)
+    @Autowired
     public void setTeacherService(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
@@ -57,7 +53,7 @@ public class ChildrenController {
 
     private ChildrenService childrenService;
 
-    @Autowired(required = true)
+    @Autowired
     public void setChildrenService(ChildrenService childrenService) {
         this.childrenService = childrenService;
     }
@@ -70,39 +66,13 @@ public class ChildrenController {
         this.userService = userService;
     }
 
-//    @ModelAttribute("schoolClasses")
-//    public List<SchoolClass> getAllClasses(){
-//        return schoolClassService.listSchoolClass();
-//    }
-//
-//
-//    @ModelAttribute("childrens")
-//    public List<Children> getAllChildrens() {
-//        return childrenService.listChildrens();
-//    }
-//
 
 
+    // Вернуть PDF файл USERNAME/PASSWORD
     @RequestMapping(value = "/work/parents/{classID}", method = RequestMethod.GET)
     public ModelAndView getPDF(@PathVariable("classID") int classID) {
-
-        Set<User> users = new LinkedHashSet<>();
         List<Children> childrens = this.schoolClassService.getSchoolClassById(classID).getChildrenList();
-        Collections.sort(childrens, (o1, o2) -> o1.getCh_surname().compareTo(o2.getCh_surname()));
-
-        if (childrens.get(0).getParent() != null) {
-            for (Children children : childrens) {
-                if (children.getParent() != null) {
-                    users.add(children.getParent());
-                }
-            }
-        } else {
-            User defaultParent = new User();
-            defaultParent.setParentName("Родители отсутствуют");
-            users.add(defaultParent);
-        }
-
-        return new ModelAndView("PDFCreator", "users", users);
+        return new ModelAndView("PDFCreator", "childrens", childrens);
     }
 
 
@@ -111,8 +81,38 @@ public class ChildrenController {
         model.addAttribute("children", new Children());
         model.addAttribute("schoolClasses", this.schoolClassService.listSchoolClass());
         model.addAttribute("listChildrens", this.childrenService.listChildrens());
-
         return "childrens";
+    }
+
+    @RequestMapping(value = "admin/childrens/add", method = RequestMethod.POST)
+    public String addChildren(@Valid @ModelAttribute("children") Children children, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "childrens";
+        }
+
+        if (children.getCh_id() == 0) {
+            this.childrenService.addChildren(children);
+        }else {
+            this.childrenService.updateChildren(children);
+        }
+        return "redirect:/admin/childrens";
+    }
+
+
+    @RequestMapping("admin/childrens/edit/{id}")
+    public String updateChildren(@PathVariable("id") int id, Model model) {
+        model.addAttribute("children", this.childrenService.getChildrenById(id));
+        model.addAttribute("schoolClasses", this.schoolClassService.listSchoolClass());
+        model.addAttribute("listChildrens", this.childrenService.listChildrens());
+        return "childrens";
+    }
+
+
+    @RequestMapping("admin/childrens/delete/{id}")
+    public String removeChildren(@PathVariable("id") int id) {
+        this.childrenService.removeChildren(id);
+        return "redirect:/admin/childrens";
     }
 
     @RequestMapping(value = "/childreninfo/{childrenID}", method = RequestMethod.GET)
@@ -193,52 +193,12 @@ public class ChildrenController {
                                                 @PathVariable("childID") int childID,
                                                 Model model) {
         this.childrenService.removeChildren(childID);
-        model.addAttribute("listChildrens", this.schoolClassService.getSchoolClassById(classID).getChildrenList());
         return "redirect:/work/classfill/" + classID;
     }
 
 
 
-    @RequestMapping(value = "admin/childrens/add", method = RequestMethod.POST)
-    public String addChildren(@Valid @ModelAttribute("children") Children children, BindingResult bindingResult) {
 
-
-        if (bindingResult.hasErrors()) {
-            return "childrens";
-        }
-
-        if (children.getCh_id() == 0) {
-            this.childrenService.addChildren(children);
-        }else {
-            this.childrenService.updateChildren(children);
-        }
-        return "redirect:/admin/childrens";
-    }
-
-    @RequestMapping(value = "/work/classinfo/addchild", method = RequestMethod.POST)
-    public String addChildrenFromClass(@ModelAttribute ("children") Children children) {
-        if (children.getCh_id() == 0) {
-            this.childrenService.addChildren(children);
-        }else {
-            this.childrenService.updateChildren(children);
-        }
-        return "redirect:/classinfo";
-    }
-
-
-    @RequestMapping("admin/childrens/edit/{id}")
-    public String updateChildren(@PathVariable("id") int id, Model model) {
-        model.addAttribute("children", this.childrenService.getChildrenById(id));
-        model.addAttribute("schoolClasses", this.schoolClassService.listSchoolClass());
-        model.addAttribute("listChildrens", this.childrenService.listChildrens());
-        return "childrens";
-    }
-
-    @RequestMapping("admin/childrens/delete/{id}")
-    public String removeChildren(@PathVariable("id") int id) {
-        this.childrenService.removeChildren(id);
-        return "redirect:/admin/childrens";
-    }
 
     @InitBinder
     public void initBinder(ServletRequestDataBinder binder) {

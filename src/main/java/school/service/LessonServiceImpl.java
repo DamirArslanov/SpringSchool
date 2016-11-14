@@ -66,15 +66,16 @@ public class LessonServiceImpl implements LessonService {
         return this.lessonDao.listLessons();
     }
 
-    @Override
-    @Transactional
-    public void createLessonBySchedule(Schedule schedule) {
-        this.lessonDao.createLessonBySchedule(schedule);
-    }
+//    @Override
+//    @Transactional
+//    public void createLessonBySchedule(Schedule schedule) {
+//        this.lessonDao.createLessonBySchedule(schedule);
+//    }
 
 
     @Override
     @Transactional
+    @PreAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')")
     public List<Lesson> getLessonsByTeacher(String teacherUsername) {
         return this.lessonDao.getLessonsByTeacher(teacherUsername);
     }
@@ -82,15 +83,15 @@ public class LessonServiceImpl implements LessonService {
     //    @Scheduled(fixedRate=10000)
     @Override
     @Transactional
-    @Scheduled(cron="0 14 20 ? * 2")
+//    @Scheduled(cron="0 14 20 ? * 2")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void createWeekLessons() {
-        System.out.println("************ФАБРИКА СОЗДАНИЯ ЛЕКЦИИ НА НЕДЕЛЮ ОТКРЫТА!***************");
         this.lessonDao.createWeekLessons();
-        System.out.println("************ФАБРИКА СОЗДАНИЯ ЛЕКЦИИ НА НЕДЕЛЮ ЗАКРЫТА!***************");
     }
 
     @Override
     @Transactional
+    @PreAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')")
     public void createWeekLessonsByClass(int classID, boolean future) {
         this.lessonDao.createWeekLessonsByClass(classID, future);
     }
@@ -98,6 +99,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     @Transactional
+    @PreAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')")
     public List<Lesson> getSelectedMonthLessons(Teacher teacher, Date startDate, Date endDate) {
         return this.lessonDao.getSelectedMonthLessons(teacher, startDate, endDate);
     }

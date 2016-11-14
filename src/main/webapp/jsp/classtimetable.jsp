@@ -24,7 +24,7 @@
         <li><a  href="<c:url value="/childreninfo/childrenratings/${children.ch_id}"/>">Оценки</a></li>
         <li><a  href="<c:url value="/teacherinfo/${children.schoolClass.teacher.t_id}"/>">Классный руководитель</a></li>
         <li><a  href="<c:url value="/childreninfo/${children.ch_id}#notices"/>">Сообщения классу</a></li>
-        <li><a  href="<c:url value="/childreninfo/timetable/${children.schoolClass.class_id}"/>">Расписание уроков</a></li>
+        <li><a   class="active"  href="<c:url value="/childreninfo/timetable/${children.schoolClass.class_id}"/>">Расписание уроков</a></li>
     </sec:authorize>
     <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li><a href="<c:url value="/admin"/>">Админская панель</a></li>

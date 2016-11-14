@@ -7,16 +7,36 @@ import java.util.Date;
 /**
  * Created by Cheshire on 17.10.2016.
  */
-public class LessonSearchForm {
+public class SearchForm {
 
-    public LessonSearchForm() {
+    public SearchForm() {
     }
+
+    private String month;
+
+    private String year;
 
     private Date startDate;
 
     private Date endDate;
 
     private Teacher teacher;
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
 
     public Date getStartDate() {
         return startDate;

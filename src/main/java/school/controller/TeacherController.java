@@ -10,34 +10,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.ModelAndView;
 import school.entity.Children;
 import school.entity.Image;
 import school.entity.SchoolClass;
 import school.entity.Teacher;
 import school.security.TRole;
 import school.security.TRoleService;
-//import school.security.teacherSecurity.TeacherSecurityService;
-import school.security.teacherSecurity.TeacherSecurityService;
+//import school.security.teacherSecurity.SchoolSecurityService;
+import school.security.teacherSecurity.SchoolSecurityService;
 import school.service.interfaces.ImageService;
 import school.service.interfaces.SchoolClassService;
 import school.service.interfaces.TeacherService;
 import school.service.interfaces.UserService;
 
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyEditorSupport;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.Closeable;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Cheshire on 19.09.2016.
@@ -46,7 +36,6 @@ import java.util.Set;
 public class TeacherController {
 
 
-//УКАЖИ В ДИСПАТЧЕРЕ-СЁРВЛЕТ ЭТОТ БИН!!!!!!! Возможно заработает загрузка файла
 
     CommonsMultipartResolver multipartResolver;
     @Autowired
@@ -54,7 +43,6 @@ public class TeacherController {
         this.multipartResolver = multipartResolver;
     }
 
-    private final int DEFAULT_BUFFER_SIZE = 102400; // 10KB.
     ImageService imageService;
 
     @Autowired
@@ -68,49 +56,36 @@ public class TeacherController {
         this.tRoleService = tRoleService;
     }
 
-    private TeacherSecurityService teacherSecurityService;
-
+    private SchoolSecurityService schoolSecurityService;
     @Autowired
-    public void setTeacherSecurityService(TeacherSecurityService teacherSecurityService) {
-        this.teacherSecurityService = teacherSecurityService;
+    public void setSchoolSecurityService(SchoolSecurityService schoolSecurityService) {
+        this.schoolSecurityService = schoolSecurityService;
     }
 
     private SchoolClassService schoolClassService;
-
-    @Autowired(required = true)
+    @Autowired
     public void setSchoolClassService(SchoolClassService schoolClassService) {
         this.schoolClassService = schoolClassService;
     }
 
     private TeacherService teacherService;
-
-    @Autowired(required = true)
+    @Autowired
     public void setTeacherService(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
 
 
     private UserService userService;
-
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-//    @ModelAttribute("users")
-//    public List<User> getAllUsers() {
-//        return userDao.findAll();
-//    }
-
-//    @ModelAttribute("listTeachers")
-//    public List<Teacher> getAllTeachers(){
-//        return teacherService.listTeachers();
-//    }
 
 
-//    @ModelAttribute("schoolClasses")
-//    public List<SchoolClass> getAllClasses(){
-//        return schoolClassService.listSchoolClass();
-//    }
+    @RequestMapping(value = "/admin/teachers/PDF", method = RequestMethod.GET)
+    public ModelAndView getPDF() {
+        return new ModelAndView("PDFCreator", "teachers", this.teacherService.listTeachers());
+    }
 
 
     @RequestMapping(value = "admin/teachers", method = RequestMethod.GET)
@@ -137,13 +112,7 @@ public class TeacherController {
                              @RequestParam(value = "file", required=false) MultipartFile file,
                              @RequestParam(value = "imageID", required=false) Integer id) {
 
-//    @RequestMapping(value = "/teachers/add", method = RequestMethod.POST)
-//    public String addTeacher(@ModelAttribute("teacher") Teacher teacher, @RequestParam("file") MultipartFile file) {
-
-
-
         if (!file.isEmpty()) {
-//            this.imageService.addImage(file);
             Image image = (Image) this.imageService.addImage(file);
             teacher.setImage(image);
         }
@@ -151,43 +120,13 @@ public class TeacherController {
             teacher.setImage(this.imageService.getImageById(id));
         }
 
-        if (teacher.getT_id() == 0) {  //почему не NULL? Да потому что это не INTEGER(любой другой класс), а int. Был бы INTEGER - был бы и NULL
+        if (teacher.getT_id() == 0) {
             this.teacherService.addTeacher(teacher);
         }else {
             this.teacherService.updateTeacher(teacher);
         }
         return "redirect:/admin/teachers";
     }
-
-//    @RequestMapping(value = "/teacherregistration", method = RequestMethod.GET)
-//    public String teacherRegistrationG(Model model) {
-//        model.addAttribute("teacher", new Teacher());
-//
-//        return "registration";
-//    }
-//
-//    @RequestMapping(value = "/teacherregistration", method = RequestMethod.POST)
-//    public String teacherRegistration(@ModelAttribute("teacher") Teacher teacher) {
-//
-//        this.teacherService.addTeacher(teacher);
-//
-//        this.teacherSecurityService.autoLogin(teacher.getUsername(), teacher.getPassword());
-//
-//        return "index";
-//    }
-
-//    @RequestMapping(value = "/teacherlogin", method = RequestMethod.GET)
-//    public String login(Model model, String error, String logout) {
-//        if (error != null) {
-//            model.addAttribute("error", "Username or password is incorrect.");
-//        }
-//
-//        if (logout != null) {
-//            model.addAttribute("message", "Logged out successfully.");
-//        }
-//
-//        return "login";
-//    }
 
     @ModelAttribute("roles")
     public List<TRole> getAllProjects() {
@@ -200,56 +139,6 @@ public class TeacherController {
         this.teacherService.removeTeacher(id);
         return "redirect:/admin/teachers";
     }
-
-    @RequestMapping("/ajax")
-    public  String getajax(){
-        return "ajax";
-    }
-
-    @RequestMapping("/ajaxtest")
-    public @ResponseBody
-    Teacher getTime() {
-
-//        Random rand = new Random();
-//        float r = rand.nextFloat() * 100;
-//        String result = "<br>Next Random # is <b>" + r + "</b>. Generated on <b>" + new Date().toString() + "</b>";
-//        System.out.println("Debug Message from CrunchifySpringAjaxJQuery Controller.." + new Date().toString());
-//        return result;
-        Teacher teacher = new Teacher();
-        teacher.setT_name("Cleopatra");
-        return teacher;
-    }
-
-
-
-
-
-//    @RequestMapping(value = "admin/teachers/mod/{id}", method = RequestMethod.GET)
-//    public Model updateModTeacher(@PathVariable("id") int id, Model model) {
-//        System.out.println("******************НАС ВЫЗВАЛИ******************");
-//        Teacher pt = (Teacher) this.teacherService.getTeacherById(id);
-//        //ВРЕМЕННЫЙ И ВЫНУЖДЕННЫЙ КОД = PersistentBag
-//        Teacher teacher = new Teacher();
-//        teacher.setImage(pt.getImage());
-//        teacher.setT_id(pt.getT_id());
-//        teacher.setT_name(pt.getT_name());
-//        teacher.setT_surname(pt.getT_surname());
-//        teacher.setT_pname(pt.getT_pname());
-//        if (pt.getTeacherPhone() != null) {
-//            teacher.setTeacherPhone(pt.getTeacherPhone());
-//        } else teacher.setTeacherPhone(null);
-//        teacher.setUsername(pt.getUsername());
-//        teacher.setPassword(pt.getPassword());
-//        teacher.setSchoolClass(pt.getSchoolClass());
-//        List<TRole> roles = new ArrayList<>();
-//        List<TRole> temp = pt.getRoles();
-//        for (TRole role : temp) {
-//            roles.add(tRoleService.getTRoleById(role.getTRId()));
-//        }
-//        teacher.setRoles(roles);
-//        model.addAttribute("teacher", teacher);
-//        return model;
-//    }
 
 
     @RequestMapping("admin/teachers/edit/{id}")
@@ -278,10 +167,7 @@ public class TeacherController {
         if (teacher.getImage() != null) {
             model.addAttribute("imageID", teacher.getImage().getId());
         }
-
-
         model.addAttribute("teacher", p);
-
         model.addAttribute("listTeachers", this.teacherService.listTeachers());
         return "teachers";
     }
@@ -291,18 +177,15 @@ public class TeacherController {
 
         binder.registerCustomEditor(SchoolClass.class, "schoolClass", new PropertyEditorSupport() {
                 public void setAsText(String text) {
-//                    if (!("null".equals(text))) {
                         Integer class_id = Integer.parseInt(text);
                         SchoolClass schoolClass = (SchoolClass) schoolClassService.getSchoolClassById(class_id);
                         setValue(schoolClass);
-//                    }
                 }
 
                 public String getAsText() {
                     Object value = getValue();
                     if (value != null) {
                         SchoolClass schoolClass = (SchoolClass) value;
-
                         return schoolClass.getClass_name();
                     }
                     return null;
@@ -310,34 +193,11 @@ public class TeacherController {
             });
 
 
-//        binder.registerCustomEditor(TRole.class, "role", new PropertyEditorSupport() {
-//            public void setAsText(String text) {
-//                Integer TRId = Integer.parseInt(text);
-//                TRole role = (TRole) tRoleService.getTRoleById(TRId);
-//                setValue(role);
-//
-//            }
-//
-//            public String getAsText() {
-//                Object value = getValue();
-//                if (value != null) {
-//                    TRole role = (TRole) value;
-//
-//                    return role.getRole();
-//                }
-//                return null;
-//            }
-//        });
         binder.registerCustomEditor(List.class, "roles", new CustomCollectionEditor(List.class) {
 
             protected Object convertElement(Object element) {
                 if (element != null) {
                     Integer TRId = Integer.parseInt(element.toString());
-                    System.out.println("***&&&&&&&&&&&&&&&&&&&&&СМООООООООООТРИИИИИИИ&&&&&&&&&&&&&&&&&&&&&&&*********");
-                    System.out.println("***&&&&&&&&&&&&&&&&&&&&&&&&СМООООООООООТРИИИИИИИ&&&&&&&&&&&&&&&&&&&&*********");
-                    System.out.println(TRId);
-                    System.out.println("***&&&&&&&&&&&&&&&&&&&&&&&&&СМООООООООООТРИИИИИИИ&&&&&&&&&&&&&&&&&&&*********");
-                    System.out.println("***&&&&&&&&&&&&&&&&&&&&&&&&&&СМООООООООООТРИИИИИИИ&&&&&&&&&&&&&&&&&&*********");
                     TRole tRole = (TRole) tRoleService.getTRoleById(TRId);
                     return tRole;
 
@@ -347,154 +207,4 @@ public class TeacherController {
 
         });
     }
-
-
-//
-//    @RequestMapping(method=RequestMethod.GET, value="/image/{imgId}")
-//    public void getImage(Model model, @PathVariable("id") Integer imgId, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        //проверка на NULL
-//        if (imgId == null) {
-//            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-//            return;
-//        }
-//        Image image = this.imageService.getImageById(imgId);
-//        if (image == null) {
-//            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-//            return;
-//        }
-//        response.reset();
-//        response.setBufferSize(DEFAULT_BUFFER_SIZE);
-//        response.setContentType("image/jpeg");
-//
-//        // Prepare streams.
-//        BufferedInputStream input = null;
-//        BufferedOutputStream output = null;
-//
-//        try {
-//            // Open streams.
-//            try {
-//                input = new BufferedInputStream(image.getContent().getBinaryStream(), DEFAULT_BUFFER_SIZE);
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//            output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
-//
-//            // Write file contents to response.
-//            byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
-//            int length;
-//            while ((length = input.read(buffer)) > 0) {
-//                output.write(buffer, 0, length);
-//            }
-//        } finally {
-//            // Gently close streams.
-//            close(output);
-//            close(input);
-//        }
-//    }
-//    private static void close(Closeable resource) {
-//        if (resource != null) {
-//            try {
-//                resource.close();
-//            } catch (IOException e) {
-//                // Do your thing with the exception. Print it, log it or mail it.
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
-//    @RequestMapping(method = RequestMethod.GET, value = "/image/teacherImg/{imgID}")
-//    public void getImage(Model model,
-//                              @PathVariable("imgID") Integer imgID,
-//                              HttpServletResponse response) throws ServletException, IOException {
-//    /*
-//     * Big thanks to BalusC for this part cf. his post on
-//     * http://balusc.blogspot.ch/2007/04/imageservlet.html
-//     */
-//
-//        // Check if ID is supplied to the request.
-//        if (imgID == null) {
-//            // Do your thing if the ID is not supplied to the request.
-//            // Throw an exception, or send 404, or show default/warning image,
-//            // or just ignore it.
-//            response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
-//            return;
-//        }
-//
-//        // Lookup Image by ImageId in database.
-//        // Do your "SELECT * FROM Image WHERE ImageID" thing.
-//        Image image = this.imageService.getImageById(imgID);
-//
-//
-//        // Check if image is actually retrieved from database.
-//        if (image == null) {
-//            // Do your thing if the image does not exist in database.
-//            // Throw an exception, or send 404, or show default/warning image,
-//            // or just ignore it.
-//            response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
-//            return;
-//        }
-//
-//        // Init servlet response.
-//        response.reset();
-//        response.setBufferSize(DEFAULT_BUFFER_SIZE);
-//        response.setContentType("image/jpeg");
-//
-//        // Prepare streams.
-//        BufferedInputStream input = null;
-//        BufferedOutputStream output = null;
-//
-//        try {
-//            // Open streams.
-//            try {
-//                input = new BufferedInputStream(image.getContent().getBinaryStream(), DEFAULT_BUFFER_SIZE);
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//            output = new BufferedOutputStream(response.getOutputStream(),DEFAULT_BUFFER_SIZE);
-//
-//            // Write file contents to response.
-//            byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
-//            int length;
-//            while ((length = input.read(buffer)) > 0) {
-//                output.write(buffer, 0, length);
-//            }
-//        } finally {
-//            // Gently close streams.
-//            close(output);
-//            close(input);
-//        }
-//    }
-//
-//    // Helper (can be refactored to public utility class)
-//    private static void close(Closeable resource) {
-//        if (resource != null) {
-//            try {
-//                resource.close();
-//            } catch (IOException e) {
-//                // Do your thing with the exception. Print it, log it or mail
-//                // it.
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

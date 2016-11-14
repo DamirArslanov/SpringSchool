@@ -18,7 +18,6 @@ import java.util.List;
 public class SchoolClassDaoImpl implements SchoolClassDao {
 
 
-
     private SessionFactory sessionFactory;
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -29,41 +28,30 @@ public class SchoolClassDaoImpl implements SchoolClassDao {
     public void addSchoolClass(SchoolClass schoolClass) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(schoolClass);
-
     }
 
     public void updateSchoolClass(SchoolClass schoolClass) {
         Session session = this.sessionFactory.getCurrentSession();
         session.update(schoolClass);
-
     }
 
     public void removeSchoolClass(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         SchoolClass schoolClass = (SchoolClass) session.load(SchoolClass.class, new Integer(id));
-
         if (schoolClass != null) {
             session.delete(schoolClass);
         }
-
     }
 
     public SchoolClass getSchoolClassById(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         SchoolClass schoolClass = (SchoolClass) session.load(SchoolClass.class, new Integer(id));
-
         return schoolClass;
     }
 
     public List<SchoolClass> listSchoolClass() {
-        System.out.println("****************ФАБРИКА КЛАССОВ ОТКРЫТА*************************");
         Session session = this.sessionFactory.getCurrentSession();
         List<SchoolClass> schoolClassList = session.createQuery("FROM SchoolClass").list();
-
-        for (SchoolClass schoolClass : schoolClassList) {
-
-        }
-        System.out.println("****************ФАБРИКА ЗАКРЫТА*************************");
         return schoolClassList;
     }
 }

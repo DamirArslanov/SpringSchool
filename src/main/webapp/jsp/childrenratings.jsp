@@ -10,9 +10,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 <head>
     <title>Оценки ${children.FIO}</title>
+
     <link href="<c:url value="/resources/css/rating.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/w3.css" />" rel="stylesheet">
 </head>
@@ -53,8 +55,30 @@
         </c:if>
 </nav>
 
-<c:if test="${!empty ratings}">
+
     <div class="w3-container" style="margin-left:160px">
+        <p><h2>Оценки за  <fmt:formatDate pattern="MMMM" value="${now}"/></h2></p>
+
+<c:url var="selectRating" value="/childreninfo/childrenratings/${children.ch_id}"/>
+            <p style="padding: 1px 2px; border-radius: 0 0 0 0px;">
+    <form:form action="${selectRating}" commandName="LessonSearchForm" method="POST">
+      <table>
+          <tr>
+              <td style="padding: 1px 2px; border-radius: 0 0 0 0px;">
+                  <form:select path="month" >
+                    <form:options items="${selectMonth}" />
+                  </form:select>
+              </td>
+              <td>
+                  <form:input path="year" value="${todayDate.getYear()}" placeholder="пример: 2016"/>
+              </td>
+              <td><input type="submit" value="Вывести оценки"/></td>
+          </tr>
+      </table>
+    </form:form>
+</p>
+
+<c:if test="${!empty ratings}">
     <c:forEach items="${subjectSet}" var="subject" varStatus="index">
         <table>
             <tr>
@@ -64,7 +88,7 @@
             <tr>
                 <c:forEach items="${ratings}" var="rating">
                     <c:if test="${rating.subject.sub_id == subject.sub_id}">
-                        <th><fmt:formatDate pattern="dd/MM/yy" value="${rating.rt_Date}" /></th>
+                        <th style="font-size: small"><fmt:formatDate pattern="dd/MM/yy" value="${rating.rt_Date}" /></th>
                     </c:if>
                 </c:forEach>
             </tr>
@@ -87,8 +111,9 @@
             </tr>
         </table>
     </c:forEach>
-</div>
 </c:if>
+</div>
+
 <c:if test="${empty ratings}">
     <div class="w3-container" style="margin-left:160px">
         <div align="center"><h2>Оценок нет.</h2></div>

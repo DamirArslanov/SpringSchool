@@ -30,29 +30,10 @@
         <li style="float:right"><a href="<c:url value="/childreninfo/"/>">Родительская</a></li>
     </sec:authorize>
     <sec:authorize access="isAnonymous()">
-        <li style="float:right"><a href="<c:url value="/login"/>">Войти</a></li>
+        <li style="float:right"><a href="<c:url value="/login"/>">Войти в систему</a></li>
     </sec:authorize>
 </ul>
 <hr/>
-  <table>
-      <tr>
-          <th class="my">teacher</th>
-          <th class="my">---------</th>
-          <th class="my">parent</th>
-      </tr>
-      <tr>
-          <th>username</th>
-          <th>password</th>
-          <th>username</th>
-          <th>password</th>
-      </tr>
-      <tr>
-          <td>fdg5gf</td>
-          <td>l32g45</td>
-          <td>userTaPHd</td>
-          <td>LsKF9cFN</td>
-      </tr>
-  </table>
-  http://www.edu.ru/news/feed.rss
+
   </body>
 </html>

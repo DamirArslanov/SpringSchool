@@ -207,6 +207,7 @@
             </div>
         </div>
     </form:form>
+    <a class="btn btn-block btn-success" role="button" href="<c:url value="/admin/teachers/PDF"/>">Получить PDF список учителей вида(ИМЯ/ПАРОЛЬ)</a>
 </sec:authorize>
 <hr/>
 <h1>Список учителей</h1>
@@ -225,7 +226,6 @@
                 <th>Password</th>
                 <th>Roles</th>
                 <th>ФИО</th>
-                <th></th>
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <th></th>
                     <th></th>
@@ -250,7 +250,6 @@
                         </c:forEach>
                     </td>
                     <td>${teacher.FIO}</td>
-                    <td ><a href="<c:url value="/admin/teachers/schedule/${teacher.t_id}"/>">Занятия</a></td>
                     <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <td width = "120"><a href="<c:url value="/admin/teachers/edit/${teacher.t_id}"/>">Редактировать</a></td>
                     <td><a href="<c:url value="/admin/teachers/delete/${teacher.t_id}"/>">Удалить</a></td>

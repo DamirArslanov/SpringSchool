@@ -19,32 +19,24 @@ import java.util.List;
 public class ScheduleDaoImpl implements ScheduleDao {
 
 
-    @Autowired
-    public SessionFactory sessionFactory;
 
+    public SessionFactory sessionFactory;
+    @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
-
-
-
 
 
     @Override
     public void addSchedule(Schedule schedule) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(schedule);
-        System.out.println("Урок добавлен. Детали урока: " + schedule);
-
     }
 
     @Override
     public void updateSchedule(Schedule schedule) {
         Session session = this.sessionFactory.getCurrentSession();
         session.update(schedule);
-        System.out.println("Урок обновлен. Детали урока");
-
     }
 
     @Override
@@ -54,28 +46,20 @@ public class ScheduleDaoImpl implements ScheduleDao {
         if (schedule != null) {
             session.delete(schedule);
         }
-        System.out.println("Урок удален. Детали урока: " + schedule);
-
     }
 
     @Override
     public Schedule getScheduleById(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         Schedule schedule = (Schedule) session.load(Schedule.class, new Integer(id));
-        System.out.println("Урок загружен по id. Детали урока: " + schedule);
         return schedule;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Schedule> listSchedules() {
-        System.out.println("****************ФАБРИКА УРОКОВ ОТКРЫТА*************************");
         Session session = this.sessionFactory.getCurrentSession();
         List<Schedule> listSchedules = session.createQuery("FROM Schedule").list();
-        for (Schedule schedule : listSchedules) {
-            System.out.println("Список уроков" + schedule);
-        }
-        System.out.println("****************ФАБРИКА ЗАКРЫТА*************************");
         return listSchedules;
     }
 
@@ -107,7 +91,6 @@ public class ScheduleDaoImpl implements ScheduleDao {
     @Override
     public List<Schedule> listSelectedShedule(int schedule, int teacher) {
         Session session = this.sessionFactory.getCurrentSession();
-
         if (schedule == 000) {
             String hqlClassNULL = "FROM Schedule schedule WHERE schedule.teacher.t_id = (:teacher)";
             Query queryClassNULL = session.createQuery(hqlClassNULL).setParameter("teacher", teacher);
@@ -125,6 +108,4 @@ public class ScheduleDaoImpl implements ScheduleDao {
             return listSelectedShedule;
         }
     }
-
-
 }

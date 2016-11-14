@@ -16,9 +16,9 @@ import java.util.List;
 @Repository
 public class WeekdayDaoImpl implements WeekdayDao {
 
-    @Autowired
-    public SessionFactory sessionFactory;
 
+    public SessionFactory sessionFactory;
+    @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -34,10 +34,8 @@ public class WeekdayDaoImpl implements WeekdayDao {
 
     @Override
     public List<Weekday> listWeekdays() {
-        System.out.println("****************ФАБРИКА ДНЕЙ ОТКРЫТА*************************");
         Session session = this.sessionFactory.getCurrentSession();
         List<Weekday> weekdays = session.createQuery("FROM Weekday").list();
-        System.out.println("****************ФАБРИКА ЗАКРЫТА*************************");
         return weekdays;
     }
 }

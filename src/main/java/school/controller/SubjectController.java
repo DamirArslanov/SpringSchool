@@ -20,17 +20,11 @@ import java.util.List;
 @Controller
 public class SubjectController {
 
-
     private SubjectService subjectService;
-
-    @Autowired(required = true)
+    @Autowired
     public void setSubjectService(SubjectService subjectService) {
         this.subjectService = subjectService;
     }
-
-
-
-
 
 
     @ModelAttribute("subjects")
@@ -43,7 +37,6 @@ public class SubjectController {
     public String listSubjects(Model model) {
         model.addAttribute("subject", new Subject());
         model.addAttribute("listSubjects", this.subjectService.listSubjects());
-
         return "subjects";
     }
 
@@ -70,14 +63,6 @@ public class SubjectController {
         this.subjectService.removeSubject(id);
         return "redirect:/admin/subjects";
     }
-
-
-
-
-
-
-
-
 }
 
 

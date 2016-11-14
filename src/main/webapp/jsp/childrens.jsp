@@ -175,6 +175,9 @@
             <c:if test="${!empty children.ch_name}">
                 <form:hidden path="ch_id"/>
             </c:if>
+            <c:if test="${!empty children.parent}">
+                <form:hidden path="parentId.parentId"/>
+            </c:if>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="submit" class="btn btn-default" value="<spring:message text="Сохранить"/>"/>

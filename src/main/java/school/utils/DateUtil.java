@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import school.entity.Schedule;
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -38,6 +39,19 @@ public class DateUtil {
         calendar.setTime(new Date()); // Устанавливаем текущее время
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // Перебрасываем дату на понедельник
         calendar.add(Calendar.DAY_OF_WEEK, (number - 1)); // Прибавляем к понедельнику дату необходимого дня недели
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        Date date = calendar.getTime();
+        return date;
+    }
+
+    //Метод возвращает дату по дню недели
+    public Date getFutureDateByWeekNumber(int number) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date()); // Устанавливаем текущее время
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // Перебрасываем дату на понедельник
+        calendar.add(Calendar.DAY_OF_WEEK, (number - 1)); // Прибавляем к понедельнику дату необходимого дня недели
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
         Date date = calendar.getTime();
         return date;
     }
@@ -49,19 +63,13 @@ public class DateUtil {
         return localDate;
     }
 
-//
-//    public Date getDate() {
-//        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-//        Date date6 = new Date();
-//        return dateFormat.format(date6);
-//    }
-
 
     //Метод возвращает массив с датами этой недели
     //Можно использовать для массового создания лекции на эту неделю
     public List<Date> giveMeThisWeekDays() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date()); // Устанавливаем текущее время
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); //Устанавливаем понедельник на календаре, будто сейчас понедельник
 
         List<Date> dates = new ArrayList<>();
@@ -69,7 +77,6 @@ public class DateUtil {
             Date date = calendar.getTime();
             dates.add(date);
             calendar.add(Calendar.DAY_OF_WEEK, 1); //Прибавляем сутки
-            System.out.println(date);
         }
         return dates;
     }
@@ -81,6 +88,7 @@ public class DateUtil {
         Date date = new Date(); //Получаем сегодняшнуюю дату
         Calendar instance = Calendar.getInstance(); //Получаем инстанс календаря
         instance.setTime(date); //Сетапим сегодняшнюю дату (сегодня 7 день недели, наверное)
+        instance.set(Calendar.HOUR_OF_DAY, 0);
         if (getWeekNumber() == 1) {
             instance.add(Calendar.DAY_OF_MONTH, 7); //Получим один из дней следующей недели
         } else { // Иначе можем "перепрыгнуть" неделю
@@ -99,6 +107,12 @@ public class DateUtil {
         return dates;
     }
 
+    public static void main(String[] args) {
+        DateUtil dateUtil = new DateUtil();
+        System.out.println(dateUtil.giveMeThisWeekDays());
+
+    }
+
 
     //Метод возвращает массив с датами нынешней или следующей недели
     //В зависимости от того, когда был вызван, т.к. он использует метод getWeekNumber()
@@ -111,51 +125,21 @@ public class DateUtil {
         }
     }
 
+    // Метод возвращает ОТРЕДАКТИРОВАННУЮ ДАТУ в соответствии с ЧАСАМИ ЗАНЯТИЙ
+    // (IN 12.06.2016 00:00:00 - OUT 12.06.2016 08:30:00)
     public Date setLessonTime(Date date, Schedule schedule) {
-        LocalDateTime currentTime = LocalDateTime.now();
         int i = schedule.getTime().indexOf(":");
         String hour = schedule.getTime().substring(0, i);
         String minute = schedule.getTime().substring(i+1, schedule.getTime().length());
-
-
-//        LocalDate localDate = LocalDate.of(Year.now(),Month.valueOf(),,1,1,1);
-//        Clock clock = Clock.system('');
-
 
         Calendar calendar=Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
         calendar.set(Calendar.MINUTE, Integer.parseInt(minute));
         date=calendar.getTime();
-        System.out.println("Current DateTime: " + date);
         return date;
     }
 
-
-    public static void main(String[] args) {
-        DateUtil dateUtil = new DateUtil();
-        Date date = new Date(); //Получаем сегодняшнуюю дату
-        Calendar instance = Calendar.getInstance(); //Получаем инстанс календаря
-        instance.setTime(date); //Сетапим сегодняшнюю дату (сегодня 7 день недели, наверное)
-        instance.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
-        date = instance.getTime();
-        System.out.println(date);
-        instance.add(Calendar.DAY_OF_MONTH, 6); //Получим один из дней следующей недели
-        date = instance.getTime();
-        System.out.println(date);
-
-
-    }
-//
-//    public static void main(String[] args) {
-//        DateUtil dateUtil = new DateUtil();
-//        List<Date> dates = dateUtil.giveMeWeekDays();
-//        for (Date date : dates) {
-//            System.out.println(date);
-//            System.out.println("DAY NUMBER: " + dateUtil.giveMeWeekNumberOnDate(date));
-//            System.out.println("--------------------------------------");
-//        }
-//    }
 
     //Вернуть последний день месяца
     public Date getLastDayMonth() {
@@ -176,6 +160,7 @@ public class DateUtil {
         return now;
     }
 
+    // Возвращает LIST с Первым и Последним днем месяца из полученной даты
     public List<Date> getFirstAndLastDaysOfSelectedMonth(Date date) {
         List<Date> dates = new ArrayList<>();
         Calendar c = Calendar.getInstance();
@@ -198,14 +183,4 @@ public class DateUtil {
         Date date = calendar.getTime();
         return date;
     }
-//
-//    public static void main(String[] args) {
-//        DateUtil dateUtil = new DateUtil();
-//        Date selectedMonth = dateUtil.getSelectedMonthDays(2016, 5);
-//        Date firstDay = dateUtil.getFirstAndLastDaysOfSelectedMonth(selectedMonth).get(0);
-//        Date lastDay = dateUtil.getFirstAndLastDaysOfSelectedMonth(selectedMonth).get(1);
-//        System.out.println(firstDay);
-//        System.out.println(lastDay);
-//    }
-
 }

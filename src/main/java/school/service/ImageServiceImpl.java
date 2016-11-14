@@ -24,13 +24,6 @@ public class ImageServiceImpl implements ImageService {
         this.imageDao = imageDao;
     }
 
-
-
-//    @Override
-//    @Transactional
-//    public void addImage(MultipartFile file) {
-//        imageDao.addImage(file);
-//    }
     @Override
     @Transactional
     public Image addImage(MultipartFile file) {

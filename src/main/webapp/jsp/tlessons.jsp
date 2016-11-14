@@ -12,7 +12,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<%--<%@ page session="false" %>--%>
+
 <html>
 <head>
     <title>Список уроков</title>
@@ -173,17 +173,14 @@
                         <td class="my" colspan="4">Пятница</td>
                     </tr>
                     <tr>
-
                         <th>Дата</th>
                         <th>Класс</th>
                         <th>Предмет</th>
-
                         <th>Перейти</th>
                     </tr>
                     <c:forEach items="${lessons}" var="lesson">
                         <c:if test="${lesson.schedule.weekday.week_id == 5}">
                             <tr>
-
                                 <td><fmt:formatDate pattern="dd/MM/yyyy" value="${lesson.less_Date}" /></td>
                                 <td>${lesson.schedule.schoolClass.class_name}</td>
                                 <td>${lesson.schedule.subject.sub_name}</td>
@@ -202,11 +199,9 @@
                         <td class="my" colspan="4">Суббота</td>
                     </tr>
                     <tr>
-
                         <th>Дата</th>
                         <th>Класс</th>
                         <th>Предмет</th>
-
                         <th>Перейти</th>
                     </tr>
                     <c:forEach items="${lessons}" var="lesson">
@@ -227,71 +222,5 @@
     </tr>
 </table>
 <hr/>
-<%--<c:url var="addAction" value="/admin/schedules/add"/>--%>
-<%--<form:form action="${addAction}" commandName="schedule">--%>
-<%--<table>--%>
-<%--<c:if test="${!empty schedule.shed_id}">--%>
-<%--<tr>--%>
-<%--<td>--%>
-<%--<form:label path="shed_id">--%>
-<%--<spring:message text="ID"/>--%>
-<%--</form:label>--%>
-<%--</td>--%>
-<%--<td>--%>
-<%--<form:input path="shed_id" readonly="true"  disabled="true"/>--%>
-<%--<form:hidden path="shed_id"/>--%>
-<%--</td>--%>
-<%--</tr>--%>
-<%--</c:if>--%>
-<%--<tr>--%>
-<%--<td>День недели</td>--%>
-<%--<td><form:select path="weekday.week_id" items="${weekdays}" selected="true"--%>
-<%--itemLabel="week_name"--%>
-<%--itemValue="week_id"/></td>--%>
-<%--<td><form:errors path="weekday"/></td>--%>
-<%--</tr>--%>
-
-
-
-<%--<tr>--%>
-<%--<td>Предмет</td>--%>
-<%--<td><form:select path="subject.sub_id" items="${subjects}" selected="true"--%>
-<%--itemLabel="sub_name"--%>
-<%--itemValue="sub_id"/></td>--%>
-<%--<td><form:errors path="subject"/></td>--%>
-<%--</tr>--%>
-
-
-<%--<tr>--%>
-<%--<td>Класс</td>--%>
-<%--<td><form:select path="schoolClass.class_id" items="${schoolclasses}" itemLabel="class_name" itemValue="class_id"/></td>--%>
-<%--<td><form:errors path="schoolClass"/></td>--%>
-<%--</tr>--%>
-
-<%--<tr>--%>
-<%--<td>Учитель</td>--%>
-<%--<td><form:select path="teacher.t_id" items="${teachers}" itemLabel="t_name" itemValue="t_id"/></td>--%>
-<%--<td><form:errors path="teacher"/></td>--%>
-
-<%--</tr>--%>
-
-
-
-<%--<tr>--%>
-<%--<td colspan="2">--%>
-<%--<c:if test="${!empty schedule.schoolClass}">--%>
-<%--<input type="submit"--%>
-<%--value="<spring:message text="Edit Schedule"/>"/>--%>
-<%--</c:if>--%>
-<%--<c:if test="${empty schedule.schoolClass}">--%>
-<%--<input type="submit"--%>
-<%--value="<spring:message text="Add Schedule"/>"/>--%>
-<%--</c:if>--%>
-<%--</td>--%>
-<%--</tr>--%>
-<%--</table>--%>
-<%--</form:form>--%>
-
-
 </body>
 </html>

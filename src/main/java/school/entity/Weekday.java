@@ -8,8 +8,6 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by Cheshire on 27.09.2016.
  *
- * Будем считать этот класс временным решением проблемы с учебными днями.
- * Возможно, что позже придет иное решение.
  */
 @Component
 @Entity

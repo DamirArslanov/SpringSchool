@@ -44,18 +44,14 @@ public class UserDaoImpl implements UserDao {
         user.setChildren(children);
         user.setParentName("Родитель " + children.getFIO());
         user.setPassword(generator.simplePassGenerator());
-        System.out.println("МЫ ПРИДУМАЛИ ПАРОЛЬ! "+ user.getPassword());
 
         Boolean trying = false;
         while (trying == false) {
             String username = generator.simpleUsernameGenerator("user");
             String hql = "FROM User user WHERE user.username = (:username)";
             Query query = session.createQuery(hql).setParameter("username", username);
-            System.out.println("***************************");
-            System.out.println(query.list());
             if (query.list().isEmpty()) {
                 user.setUsername(username);
-                System.out.println("МЫ ПРИДУМАЛИ ПАРОЛЬ! "+ user.getUsername());
                 trying = true;
             }
         }

@@ -31,36 +31,29 @@ import java.util.List;
 public class SchoolClassController {
 
     private NoticeService noticeService;
-
     @Autowired
     public void setNoticeService(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 
     private ChildrenService childrenService;
-
-    @Autowired(required = true)
+    @Autowired
     public void setChildrenService(ChildrenService childrenService) {
         this.childrenService = childrenService;
     }
 
-
     private SchoolClassService schoolClassService;
-
-    @Autowired(required = true)
+    @Autowired
     public void setSchoolClassService(SchoolClassService schoolClassService) {
         this.schoolClassService = schoolClassService;
     }
 
 
     private TeacherService teacherService;
-
     @Autowired(required = true)
     public void setTeacherService(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
-
-
 
     @ModelAttribute("listFTeachers")
     public List<Teacher> getAllClassess(){
@@ -117,7 +110,6 @@ public class SchoolClassController {
     public String listschoolClasses(Model model) {
         model.addAttribute("schoolClass", new SchoolClass());
         model.addAttribute("listschoolClasses", this.schoolClassService.listSchoolClass());
-
         return "schoolclasses";
     }
 
@@ -141,7 +133,6 @@ public class SchoolClassController {
     @RequestMapping("admin/schoolclasses/edit/{id}")
     public String updateSchoolClass(@PathVariable("id") int id, Model model) {
         model.addAttribute("schoolClass", this.schoolClassService.getSchoolClassById(id));
-
         if (id != 0) {
             model.addAttribute("listFTeachers", this.teacherService.listEditPlusFreeTeachers(id));
         }

@@ -11,8 +11,6 @@ import java.util.List;
  */
 public interface ImageService {
 
-//    public void addImage(MultipartFile file);
-
     public Image addImage(MultipartFile file);
 
     public void updateImage(Image image);

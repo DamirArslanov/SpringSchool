@@ -22,10 +22,6 @@ public class Schedule {
     String time;
 
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @Column(name = "weekdayId", nullable = false)
-//    String weekday;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "weekdayId", nullable = false)
     Weekday weekday;

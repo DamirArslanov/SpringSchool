@@ -191,10 +191,6 @@
 </div>
 </form:form>
 
-<%--<div class="center-block">--%>
-<%--<h1><a class="btn btn-info col-sm-6 center-block" role="button" href="<c:url value="/work/notice/add/${schoolClass.class_id}"/>">Добавить сообщение классу</a></h1>--%>
-<%--</div>--%>
-
 <div id="example">
 <c:if test="${!empty schoolClass.notices}">
     <div class="table-responsive">

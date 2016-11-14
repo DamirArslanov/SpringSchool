@@ -21,6 +21,4 @@ public interface SubjectDao {
 
     public List<Subject> listSubjects();
 
-
-//    public List<Subject> findByClass(SchoolClass schoolClass);
 }

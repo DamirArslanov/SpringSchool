@@ -30,7 +30,7 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     SchoolClassDao schoolClassDao;
-    @Autowired(required = true)
+    @Autowired
     public void setSchoolClassDao(SchoolClassDao schoolClassDao) {
         this.schoolClassDao = schoolClassDao;
     }
@@ -52,7 +52,7 @@ public class TeacherDaoImpl implements TeacherDao {
     public void addTeacher(Teacher teacher) {
         Session session = this.sessionFactory.getCurrentSession();
         Boolean trying = false;
-
+        // Если USERNAME не задан, то генерируем его и проверяем на дубликат пока FALSE
         if (teacher.getUsername().equals("")) {
             while (trying == false) {
                 String username = generator.simpleUsernameGenerator("teacher");
@@ -67,15 +67,12 @@ public class TeacherDaoImpl implements TeacherDao {
         if (teacher.getPassword().equals("")) {
             teacher.setPassword(generator.simplePassGenerator());
         }
-
         session.persist(teacher);
-        System.out.println("Teacher добавлен/сохранён. Детали учителя: " + teacher);
     }
 
     public void updateTeacher(Teacher teacher) {
         Session session = this.sessionFactory.getCurrentSession();
         session.update(teacher);
-        System.out.println("Teacher обновлен. Детали учителя: " + teacher);
     }
 
     public void removeTeacher(int id) {
@@ -84,26 +81,19 @@ public class TeacherDaoImpl implements TeacherDao {
         if (teacher!=null) {
             session.delete(teacher);
         }
-        System.out.println("Teacher удален. Детали удаленного учителя" + teacher);
     }
 
     public Teacher getTeacherById(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         Teacher teacher = (Teacher) session.load(Teacher.class, new Integer(id));
-        System.out.println("Teacher загружен по id. Детали учителя" + teacher);
         return teacher;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Teacher> listTeachers() {
-        System.out.println("****************ФАБРИКА УЧИТЕЛЕЙ ОТКРЫТА*************************");
         Session session = this.sessionFactory.getCurrentSession();
-        List<Teacher> listTeachers = session.createQuery("FROM Teacher").list();
-        for (Teacher teacher : listTeachers) {
-            System.out.println("TeacherList" + teacher);
-        }
-        System.out.println("****************ФАБРИКА ЗАКРЫТА*************************");
+        List<Teacher> listTeachers = session.createQuery("FROM Teacher teacher ORDER BY teacher.t_surname").list();
         return listTeachers;
     }
 
@@ -125,7 +115,6 @@ public class TeacherDaoImpl implements TeacherDao {
             //добавим его в уже созданный ранее листПустыхУчителей
             listEditPlusFreeTeachers.add(teacher);
         }
-
         return listEditPlusFreeTeachers;
     }
 
@@ -155,7 +144,6 @@ public class TeacherDaoImpl implements TeacherDao {
         //Пока я не понял, почему возникает ошибка если пытаюсь скастовать
         // одиночного учителя сразу же после его получения из запроса
         List<Teacher> teacherList = query.list();
-//        Teacher teacher = (Teacher) teacherList.get(0);
         return teacherList;
     }
 
@@ -168,8 +156,5 @@ public class TeacherDaoImpl implements TeacherDao {
             Teacher teacher = (Teacher) query.getSingleResult();
             return teacher;
         } else return null;
-
     }
-
-
 }

@@ -12,10 +12,7 @@ import school.dao.interfaces.SubjectDao;
 import school.entity.*;
 import school.utils.DateUtil;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Cheshire on 28.09.2016.
@@ -33,7 +30,6 @@ public class RatingDaoImpl implements RatingDao {
 
 
     private ChildrenDao childrenDao;
-
     @Autowired
     public void setChildrenDao(ChildrenDao childrenDao) {
         this.childrenDao = childrenDao;
@@ -41,7 +37,6 @@ public class RatingDaoImpl implements RatingDao {
 
 
     ScheduleDao scheduleDao;
-
     @Autowired
     public void setScheduleDao(ScheduleDao scheduleDao) {
         this.scheduleDao = scheduleDao;
@@ -49,14 +44,12 @@ public class RatingDaoImpl implements RatingDao {
 
 
     private SubjectDao subjectDao;
-
     @Autowired
     public void setSubjectDao(SubjectDao subjectDao) {
         this.subjectDao = subjectDao;
     }
 
     DateUtil dateUtil;
-
     @Autowired
     public void setDateUtil(DateUtil dateUtil) {
         this.dateUtil = dateUtil;
@@ -90,12 +83,20 @@ public class RatingDaoImpl implements RatingDao {
         return rating;
     }
 
+
     @Override
-    public List<Rating> getRatingsByChildren(int childrenID) {
+    public List<Rating> getRatingsByChildren(int childrenID, Date date) {
         Session session = this.sessionFactory.getCurrentSession();
+        List<Date> dates = new LinkedList<>();
+        dates = dateUtil.getFirstAndLastDaysOfSelectedMonth(date);
+        Date startDate = dates.get(0);
+        Date endDate = dates.get(dates.size() - 1);
         List<Rating> ratings = new ArrayList<>();
-        String hql = "FROM Rating rating WHERE rating.children.ch_id = (:childrenID) ORDER BY rating.subject.sub_name ASC";
-        Query query = session.createQuery(hql).setParameter("childrenID", childrenID);
+        String hql = "FROM Rating rating WHERE rating.children.ch_id = (:childrenID)AND rating.rt_Date BETWEEN (:startDate) AND (:endDate) ORDER BY rating.subject.sub_name ASC, rating.rt_Date ASC";
+        Query query = session.createQuery(hql)
+                .setParameter("childrenID", childrenID)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate);
         if (!query.list().isEmpty()) {
             ratings = query.list();
             return ratings;
@@ -117,13 +118,14 @@ public class RatingDaoImpl implements RatingDao {
     @Override
     public List<Rating> getRatingsByLesson(int lesson_id) {
         Session session = this.sessionFactory.getCurrentSession();
-        List<Rating> ratingsByLesson;
+        List<Rating> ratingsByLesson = new LinkedList<>();
         String hql = "SELECT lesson.ratingList FROM Lesson lesson WHERE lesson.less_id = (:lesson_id)";
         Query query = session.createQuery(hql).setParameter("lesson_id", lesson_id);
         if (!query.list().isEmpty()) {
             ratingsByLesson = query.list();
             return ratingsByLesson;
-        } else return null;
+        }
+        return  ratingsByLesson;
     }
 
     @Override
@@ -132,7 +134,6 @@ public class RatingDaoImpl implements RatingDao {
 
         for (Map.Entry<Integer, String> entry : ratingMap.entrySet()) {
             Rating rating = new Rating();
-            System.out.println("ФАБРИКА ОЦЕНОК ОТКРЫТА! СЕЙЧАС НАЧНЕМ!");
             rating.setChildren(this.childrenDao.getChildrenById(entry.getKey()));
             //Попытка автоматического прописывания оценки "Присутствовал" по умолчанию
             if (entry.getValue() != null) {
@@ -151,22 +152,16 @@ public class RatingDaoImpl implements RatingDao {
                 rating.setEvaluation(1);
             }
             rating.setLesson(lesson);
-            System.out.println("ПРИСВОИЛИ ОЦЕНКЕ ЛЕКЦИЮ! " + lesson.getLess_id());
             rating.setRt_Date(lesson.getLess_Date());
-            System.out.println("ПРИСВОИЛИ ОЦЕНКЕ ДАТУ! " + lesson.getLess_Date());
-            //Пока не ясно почему не работает напрямую через гет
             Schedule schedule = this.scheduleDao.getScheduleById(lesson.getSchedule().getShed_id());
             rating.setSubject(schedule.getSubject());
-            System.out.println("ПРИСВОИЛИ ОЦЕНКЕ ПРЕДМЕТ! " + schedule.getSubject().getSub_name());
             session.persist(rating);
-            System.out.println("Добавлена оценка: " + rating.getEvaluation());
         }
-
     }
 
     @Override
     public List<Rating> getMonthRating(Date startDate, Date endDate, Children children, Subject subject) {
-        List<Rating> ratings = new ArrayList<>();
+        List<Rating> ratings = new LinkedList<>();
         Session session = this.sessionFactory.getCurrentSession();
         String ratingsSelectedMonth = "FROM Rating rating WHERE rating.children.ch_id = (:children) and rating.subject.sub_id = (:subject) and rating.rt_Date BETWEEN (:startDate) AND (:endDate) ORDER BY rating.rt_Date";
         Query ratingsSelectedMonthQuery = session.createQuery(ratingsSelectedMonth)
@@ -177,7 +172,8 @@ public class RatingDaoImpl implements RatingDao {
         if (!ratingsSelectedMonthQuery.list().isEmpty()) {
             ratings = ratingsSelectedMonthQuery.list();
             return ratings;
-        }else return null;
+        }
+        return ratings;
 
     }
 }

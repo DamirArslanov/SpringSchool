@@ -20,8 +20,8 @@ import java.util.Set;
 /**
  * Created by Cheshire on 09.10.2016.
  */
-@Service("teacherDetailsServiceImpl")
-public class TeacherDetailsServiceImpl implements UserDetailsService {
+@Service("schoolDetailsServiceImpl")
+public class SchoolDetailsServiceImpl implements UserDetailsService {
 
     TeacherDao teacherDao;
 
@@ -41,15 +41,11 @@ public class TeacherDetailsServiceImpl implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
 
-        System.out.println("Security name: " + name + "Security Subsctring " + name.substring(0,4));
         if(name.substring(0,4).equals("user")) {
-            System.out.println("*************SECURITY!***************");
-            System.out.println("Security name: " + name + "Security Subsctring" + name.substring(0,4));
             school.entity.User parent = this.userDao.getUserByUsername(name);
             Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
             grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
             User securityUser = new User(parent.getUsername(), parent.getPassword(), grantedAuthorities);
-            System.out.println("*************SECURITY!***************");
             return securityUser;
         } else {
             Teacher teacher = this.teacherDao.getTeacherByUsername(name);

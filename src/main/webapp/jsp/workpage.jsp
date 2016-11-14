@@ -37,6 +37,11 @@
         <li style="float:right"><a href="<c:url value="/"/>">Главная страница</a></li>
 </ul>
 <hr/>
-
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+<p style="margin-left: auto;
+    margin-right: auto">
+    <h1><a  href="<c:url value="/lesson/create"/>">ОБНОВИТЬ ОБЩЕЕ РАСПИСАНИЕ</a></h1>
+</p>
+</sec:authorize>
 </body>
 </html>

@@ -30,7 +30,7 @@
         <li><a href="<c:url value="/work/workpage"/>">Учительская</a></li>
     </sec:authorize>
 </ul>
-<h1>Редактирование оценки</h1>
+<h1>Редактирование оценки ${rating.children.FIO}</h1>
 <c:url var="addAction" value="/ratings/add"/>
 <form:form action="${addAction}" commandName="rating">
     <table>
@@ -80,15 +80,9 @@
                 </form:label>
             </td>
             <td>
-                <form:select path="evaluation">
-                <option value="0">Отсутствовал</option>
-                <option value="1">Присутствовал</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+                <form:select path="evaluation" >
+                    <form:options items="${selectMap}" />
                 </form:select>
-                <%--<form:errors path="ch_name" cssClass="error"/>--%>
             </td>
         </tr>
         <tr>

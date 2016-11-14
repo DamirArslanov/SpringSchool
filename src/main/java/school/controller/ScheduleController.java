@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import school.entity.*;
+import school.entity.Form.ScheduleForm;
 import school.service.interfaces.*;
 
 
@@ -25,82 +26,46 @@ import java.util.List;
 public class ScheduleController {
 
     private WeekdayService weekdayService;
-
-    @Autowired(required = true)
+    @Autowired
     public void setWeekdayService(WeekdayService weekdayService) {
         this.weekdayService = weekdayService;
     }
 
     private ScheduleService scheduleService;
-
-    @Autowired(required = true)
+    @Autowired
     public void setScheduleService(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
 
     private SubjectService subjectService;
-
-    @Autowired(required = true)
+    @Autowired
     public void setSubjectService(SubjectService subjectService) {
         this.subjectService = subjectService;
     }
 
     private SchoolClassService schoolClassService;
-
-    @Autowired(required = true)
+    @Autowired
     public void setSchoolClassService(SchoolClassService schoolClassService) {
         this.schoolClassService = schoolClassService;
     }
 
     private TeacherService teacherService;
-
-    @Autowired(required = true)
+    @Autowired
     public void setTeacherService(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
 
     private UserService userService;
-
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
-
     private LessonTimeService lessonTimeService;
-
     @Autowired
     public void setLessonTimeService(LessonTimeService lessonTimeService) {
         this.lessonTimeService = lessonTimeService;
     }
-
-    //    @ModelAttribute("schoolclasses")
-//    public List<SchoolClass> getAllClasses(){
-//        return schoolClassService.listSchoolClass();
-//    }
-//
-//    @ModelAttribute("teachers")
-//    public List<Teacher> getAllTeachers() {
-//        return  this.teacherService.listTeachers();
-//    }
-//
-//
-//    @ModelAttribute("subjects")
-//    public List<Subject> getAllSubjects() {
-//        return subjectService.listSubjects();
-//    }
-//
-//
-//    @ModelAttribute("weekdays")
-//    public List<Weekday> getAllWeekdays(){
-//        return weekdayService.listWeekdays();
-//    }
-
-
-//    @ModelAttribute("schedules")
-//    public List<Schedule> getAllSchedules() {
-//        return  this.scheduleService.listSchedules();
-//    }
 
 
     @RequestMapping(value = "admin/schedules", method = RequestMethod.GET)
@@ -120,7 +85,6 @@ public class ScheduleController {
         if (!schoolClasses.isEmpty()) {
             scheduleForm.setSchoolClass(schoolClasses.get(0));
         }
-
 
         model.addAttribute("schoolclasses", schoolClasses);
         model.addAttribute("teachers", teachers);
@@ -257,35 +221,14 @@ public class ScheduleController {
             }
             model.addAttribute("schedules", schedules);
         }
-        System.out.println("******************НАС ВЫЗВАЛИ!**************************");
         model.addAttribute("ScheduleForm", scheduleForm);
         model.addAttribute("schedule", new Schedule());
-
         return "schedules";
     }
 
 
-
-    @RequestMapping("admin/teachers/schedule/{id}")
-    public String findScheduleTeacher(@PathVariable("id") int id, Model model) {
-        model.addAttribute("schedule", new Schedule());
-
-        List<Schedule> schedules = this.scheduleService.listScheduleTeacher(id);
-        if (!schedules.isEmpty()) {
-            compareObjects(schedules);
-        }
-        model.addAttribute("schedules", schedules);
-        return "tschedule";
-    }
-
-
-
-
-
     @RequestMapping(value = "admin/schedules/add", method = RequestMethod.POST)
     public String addSchedule(@ModelAttribute("schedule") Schedule schedule, BindingResult result) {
-
-
         if (schedule.getShed_id() == 0) {
             this.scheduleService.addSchedule(schedule);
         }else {

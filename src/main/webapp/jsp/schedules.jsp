@@ -62,7 +62,8 @@
         </table>
     </form:form>
 </div>
-<h1>Список уроков</h1>
+    ${schoolClass.class_name}
+<h1>Список уроков ${ScheduleForm.schoolClass.class_name} &nbsp; ${ScheduleForm.teacher.FIO}</h1>
 <table class="equal-width-cols">
     <tr  valign="top">
         <th style="background: #fdfdff" align="center">
@@ -249,7 +250,7 @@
     </tr>
 </table>
 <hr/>
-<sec:authorize access="hasRole('ROLE_ADMIN')">
+<sec:authorize access="hasRole('ROLE_SUPERADMIN')">
     <c:url var="addAction" value="/admin/schedules/add"/>
     <form:form action="${addAction}" commandName="schedule">
         <table>

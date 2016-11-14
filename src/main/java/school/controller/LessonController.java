@@ -2,7 +2,6 @@ package school.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -10,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import school.entity.Form.LessonSearchForm;
+import school.entity.Form.SearchForm;
 import school.entity.Lesson;
 import school.entity.Teacher;
 import school.service.interfaces.LessonService;
@@ -33,22 +32,19 @@ import java.util.Map;
 public class LessonController {
 
     private LessonService lessonService;
-
     @Autowired
     public void setLessonService(LessonService lessonService) {
         this.lessonService = lessonService;
     }
 
     private RatingService ratingService;
-
     @Autowired
     public void setRatingService(RatingService ratingService) {
         this.ratingService = ratingService;
     }
 
     private TeacherService teacherService;
-
-    @Autowired(required = true)
+    @Autowired
     public void setTeacherService(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
@@ -59,7 +55,6 @@ public class LessonController {
     }
 
     private DateUtil dateUtil;
-
     @Autowired
     public void setDateUtil(DateUtil dateUtil) {
         this.dateUtil = dateUtil;
@@ -67,7 +62,7 @@ public class LessonController {
 
 
 
-//    @PostAuthorize("hasRole('ROLE_ADMIN') or isAuthenticated() and principal.getUsername() == returnObject.schedule.teacher.username")
+
     @RequestMapping(value = "/lesson/update/{less_id}", method = RequestMethod.GET)
     public String updateLesson(@PathVariable("less_id") int less_id, Model model) {
 
@@ -92,7 +87,6 @@ public class LessonController {
             this.lessonService.updateLesson(lesson);
         }
 
-
         int id = lesson.getLess_id();
         model.addAttribute("less_id", less_id);
         model.addAttribute("lesson", lesson);
@@ -112,11 +106,10 @@ public class LessonController {
 
 
 
-    @RequestMapping("lesson/create")
-    public void createLesson(Model model) {
+    @RequestMapping("/lesson/create")
+    public String createLesson() {
         this.lessonService.createWeekLessons();
-//        model.addAttribute("listLessons" , this.lessonService.listLessons());
-//        return "lesson";
+        return "redirect:/work/workpage";
     }
 
     @RequestMapping("timetable/update/{classID}")
@@ -135,26 +128,22 @@ public class LessonController {
 
 
     @RequestMapping(value = "/work/tlessons", method = RequestMethod.POST)
-    public String getSelectedLessons(@ModelAttribute("LessonSearchForm")LessonSearchForm lessonSearchForm,
+    public String getSelectedLessons(@ModelAttribute("LessonSearchForm")SearchForm searchForm,
                                      Model model) {
         List<Lesson> lessons = new ArrayList<>();
 
-        lessons = this.lessonService.getSelectedMonthLessons(lessonSearchForm.getTeacher(),
-                                                             lessonSearchForm.getStartDate(),
-                                                             lessonSearchForm.getEndDate());
+        lessons = this.lessonService.getSelectedMonthLessons(searchForm.getTeacher(),
+                                                             searchForm.getStartDate(),
+                                                             searchForm.getEndDate());
         model.addAttribute("lessons", lessons);
-        System.out.println("******************************");
-        System.out.println("******************************");
-        System.out.println("******************************");
-        System.out.println(lessonSearchForm.getTeacher().getT_id());
-    if (lessonSearchForm.getTeacher() != null) {
-        model.addAttribute("teacher", this.teacherService.getTeacherById(lessonSearchForm.getTeacher().getT_id()));
+    if (searchForm.getTeacher() != null) {
+        model.addAttribute("teacher", this.teacherService.getTeacherById(searchForm.getTeacher().getT_id()));
     }
-        LessonSearchForm lessonSearchForm1 = new LessonSearchForm();
-        lessonSearchForm1.setStartDate(lessonSearchForm.getStartDate());
-        lessonSearchForm1.setEndDate(lessonSearchForm.getEndDate());
-        lessonSearchForm1.setTeacher(lessonSearchForm.getTeacher());
-        model.addAttribute("LessonSearchForm",lessonSearchForm1);
+        SearchForm searchForm1 = new SearchForm();
+        searchForm1.setStartDate(searchForm.getStartDate());
+        searchForm1.setEndDate(searchForm.getEndDate());
+        searchForm1.setTeacher(searchForm.getTeacher());
+        model.addAttribute("LessonSearchForm", searchForm1);
         return "tlessons";
     }
 
@@ -168,22 +157,15 @@ public class LessonController {
         if(teacher.getSchoolClass() != null) {
             model.addAttribute("classCheck", true);
         }
-        LessonSearchForm lessonSearchForm = new LessonSearchForm();
-        lessonSearchForm.setStartDate(this.dateUtil.getFirstDayMonth());
-        lessonSearchForm.setEndDate(this.dateUtil.getLastDayMonth());
+        SearchForm searchForm = new SearchForm();
+        searchForm.setStartDate(this.dateUtil.getFirstDayMonth());
+        searchForm.setEndDate(this.dateUtil.getLastDayMonth());
         model.addAttribute("lessons", this.lessonService.getLessonsByTeacher(username));
-        model.addAttribute("LessonSearchForm", lessonSearchForm);
+        model.addAttribute("LessonSearchForm", searchForm);
         model.addAttribute("username", username);
         return "tlessons";
     }
 
-
-//    @RequestMapping("/schoolclasses/schedule/{id}")
-//    public String findScheduleClass(@PathVariable("id") int id, Model model) {
-//        model.addAttribute("schedule", new Schedule());
-//        model.addAttribute("listsSchedules", this.scheduleService.listScheduleClass(id));
-//        return "schedule";
-//    }
 
 
     @InitBinder

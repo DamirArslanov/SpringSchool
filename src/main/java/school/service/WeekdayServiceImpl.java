@@ -2,6 +2,7 @@ package school.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import school.dao.interfaces.WeekdayDao;
@@ -25,12 +26,14 @@ public class WeekdayServiceImpl implements WeekdayService {
 
     @Override
     @Transactional
+    @PreAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')")
     public Weekday getWeekdayById(int id) {
         return this.weekdayDao.getWeekdayById(id);
     }
 
     @Override
     @Transactional
+    @PreAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')")
     public List<Weekday> listWeekdays() {
         return this.weekdayDao.listWeekdays();
     }

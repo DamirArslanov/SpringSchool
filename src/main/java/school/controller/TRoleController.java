@@ -32,7 +32,6 @@ public class TRoleController {
     public String listTeachers(Model model) {
         model.addAttribute("role", new TRole());
         model.addAttribute("roles", this.tRoleService.T_ROLES_LIST());
-
         return "teachers";
     }
 

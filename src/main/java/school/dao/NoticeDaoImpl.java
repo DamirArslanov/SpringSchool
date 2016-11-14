@@ -19,7 +19,6 @@ public class NoticeDaoImpl implements NoticeDao {
 
 
     public SessionFactory sessionFactory;
-
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;

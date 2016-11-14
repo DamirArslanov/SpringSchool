@@ -93,14 +93,4 @@ public class Rating {
         this.lesson = lesson;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Rating{" +
-//                ", rt_Date=" + rt_Date +
-//                ", children=" + children.ch_name +
-//                ", subject=" + subject.sub_name +
-//                ", evaluation=" + evaluation +
-//                ", lesson=" + lesson.schedule.teacher.getFIO() +
-//                '}';
-//    }
 }

@@ -1,6 +1,8 @@
-package school.entity;
+package school.entity.Form;
 
 import org.springframework.stereotype.Component;
+import school.entity.SchoolClass;
+import school.entity.Teacher;
 
 import java.util.List;
 

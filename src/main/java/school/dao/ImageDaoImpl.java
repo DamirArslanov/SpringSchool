@@ -24,7 +24,6 @@ public class ImageDaoImpl implements ImageDao {
 
 
     private SessionFactory sessionFactory;
-
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -37,8 +36,6 @@ public class ImageDaoImpl implements ImageDao {
 
         image.setName(file.getOriginalFilename());
         image.setContentType(file.getContentType());
-
-
         try {
             LobCreator lobCreator = Hibernate.getLobCreator(sessionFactory.getCurrentSession());
             blob = lobCreator.createBlob(file.getInputStream(), file.getSize());
@@ -49,8 +46,6 @@ public class ImageDaoImpl implements ImageDao {
         sessionFactory.getCurrentSession().save(image);
         return image;
     }
-
-
 
 
 

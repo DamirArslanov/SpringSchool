@@ -68,8 +68,6 @@ public class Teacher {
     }
 
 
-
-
     public int getT_id() {
         return t_id;
     }
@@ -165,10 +163,6 @@ public class Teacher {
     public String getFIO() {
         return getFIOT(getT_surname(),getT_name(), getT_pname());
     }
-
-//    public void setFIO(String FIO) {
-//        this.FIO = FIO;
-//    }
 
     @Override
     public String toString() {

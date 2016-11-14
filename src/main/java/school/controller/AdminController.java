@@ -49,20 +49,6 @@ public class AdminController {
         this.userService = userService;
     }
 
-    //    @RequestMapping("/ajax")
-//    public @ResponseBody
-//    Teacher getTime() {
-//
-////        Random rand = new Random();
-////        float r = rand.nextFloat() * 100;
-////        String result = "<br>Next Random # is <b>" + r + "</b>. Generated on <b>" + new Date().toString() + "</b>";
-////        System.out.println("Debug Message from CrunchifySpringAjaxJQuery Controller.." + new Date().toString());
-////        return result;
-//        Teacher teacher = new Teacher();
-//        teacher.setT_name("Cleopatra");
-//        return teacher;
-//    }
-
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String admin() {
         return "admin";
@@ -102,7 +88,6 @@ public class AdminController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "index";
-        //return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
 
 

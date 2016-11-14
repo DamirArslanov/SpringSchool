@@ -10,17 +10,17 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import school.entity.*;
+import school.entity.Form.SearchForm;
 import school.service.interfaces.ChildrenService;
 import school.service.interfaces.LessonService;
 import school.service.interfaces.RatingService;
 import school.service.interfaces.SubjectService;
 
 
-import javax.jws.WebParam;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.beans.PropertyEditorSupport;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -61,6 +61,7 @@ public class RatingController {
     }
 
 
+
 //
 //
 //
@@ -83,23 +84,92 @@ public class RatingController {
 //        return this.ratingService.listRatings();
 //    }
 
-
-
-    @RequestMapping(value = "/childreninfo/childrenratings/{childrenID}", method = RequestMethod.GET)
-    public String getChildrenRatings(@PathVariable("childrenID") int childrenID, Model model) {
-        List<Rating> ratings = new ArrayList<>();
+    @RequestMapping(value = "/childreninfo/childrenratings/{childrenID}", method = RequestMethod.POST)
+    public String getRatingByDate(@PathVariable("childrenID") int childrenID,
+                                  @ModelAttribute("LessonSearchForm") SearchForm searchForm,
+                                  Model model){
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MONTH, Integer.parseInt(searchForm.getMonth()));
+        calendar.set(Calendar.YEAR, Integer.parseInt(searchForm.getYear()));
+        date = calendar.getTime();
+        List<Rating> ratings = new LinkedList<>();
+        ratings = this.ratingService.getRatingsByChildren(childrenID, date);
         Set<Subject> subjectSet = new LinkedHashSet<>();
-        ratings = this.ratingService.getRatingsByChildren(childrenID);
-        Collections.sort(ratings, (o1, o2) -> o1.getSubject().getSub_name().compareTo(o2.getSubject().getSub_name()));
         if (!ratings.isEmpty()) {
             for (Rating rating : ratings) {
                 subjectSet.add(rating.getSubject());
             }
         }
-        Collections.sort(ratings, (o1, o2) -> o1.getRt_Date().compareTo(o2.getRt_Date()));
+        model.addAttribute("subjectSet", subjectSet);
+        model.addAttribute("ratings", ratings);
+
+        Map<String, String> selectMonth = new LinkedHashMap<>();
+        selectMonth.put("0", "Январь");
+        selectMonth.put("1", "Февраль");
+        selectMonth.put("2", "Март");
+        selectMonth.put("3", "Апрель");
+        selectMonth.put("4", "Май");
+        selectMonth.put("5", "Июнь");
+        selectMonth.put("6", "Июль");
+        selectMonth.put("7", "Август");
+        selectMonth.put("8", "Сентябрь");
+        selectMonth.put("9", "Октябрь");
+        selectMonth.put("10", "Ноябрь");
+        selectMonth.put("11", "Декабрь");
+        model.addAttribute("selectMonth", selectMonth);
+
+        model.addAttribute("children", this.childrenService.getChildrenById(childrenID));
+        // 0_O
+        LocalDate localDate = LocalDate.now();
+        model.addAttribute("todayDate", localDate);
+        model.addAttribute("now", date);
+
+        return "childrenratings";
+    }
+
+    @RequestMapping(value = "/childreninfo/childrenratings/{childrenID}", method = RequestMethod.GET)
+    public String getChildrenRatings(@PathVariable("childrenID") int childrenID, Model model) {
+        List<Rating> ratings = new ArrayList<>();
+        Set<Subject> subjectSet = new LinkedHashSet<>();
+        ratings = this.ratingService.getRatingsByChildren(childrenID, new Date());
+        // Сортировка на HQL в базе или Collection
+//        Collections.sort(ratings, (o1, o2) -> o1.getSubject().getSub_name().compareTo(o2.getSubject().getSub_name()));
+        if (!ratings.isEmpty()) {
+            for (Rating rating : ratings) {
+                subjectSet.add(rating.getSubject());
+            }
+        }
+
+        // Сортировка на HQL в базе или Collection
+//        Collections.sort(ratings, (o1, o2) -> o1.getRt_Date().compareTo(o2.getRt_Date()));
+
+        Map<String, String> selectMonth = new LinkedHashMap<>();
+        selectMonth.put("0", "Январь");
+        selectMonth.put("1", "Февраль");
+        selectMonth.put("2", "Март");
+        selectMonth.put("3", "Апрель");
+        selectMonth.put("4", "Май");
+        selectMonth.put("5", "Июнь");
+        selectMonth.put("6", "Июль");
+        selectMonth.put("7", "Август");
+        selectMonth.put("8", "Сентябрь");
+        selectMonth.put("9", "Октябрь");
+        selectMonth.put("10", "Ноябрь");
+        selectMonth.put("11", "Декабрь");
+
+        model.addAttribute("selectMonth", selectMonth);
+        model.addAttribute("LessonSearchForm", new SearchForm());
         model.addAttribute("subjectSet", subjectSet);
         model.addAttribute("ratings", ratings);
         model.addAttribute("children", this.childrenService.getChildrenById(childrenID));
+
+        // 0_O
+        LocalDate localDate = LocalDate.now();
+        model.addAttribute("todayDate", localDate);
+        model.addAttribute("now", new Date());
+
         return "childrenratings";
     }
 
@@ -138,32 +208,17 @@ public class RatingController {
     }
 
 
-    @RequestMapping(value = "/ratings/add/{lessId}/{childId}")
-    public String addRatingByLesson(@PathVariable("lessId") int lid,
-                                      @PathVariable("childId") int cid,
-                                      Model model) {
-
-
-
-        Lesson lesson = (Lesson) this.lessonService.getLessonById(lid);
-        Subject subject = (Subject) lesson.getSchedule().getSubject();
-        model.addAttribute("subject", subject);
-        Children children = (Children) this.childrenService.getChildrenById(cid);
-        model.addAttribute("children", children);
-
-        Rating rating = new Rating();
-        rating.setChildren(children);
-        rating.setSubject(subject);
-        rating.setLesson(lesson);
-        rating.setRt_Date(lesson.getLess_Date());
-        model.addAttribute("rating", rating);
-        return "addrating";
-
-    }
-
     @RequestMapping("/lesson/editrating/{rt_id}")
     public String editLessonRating(@PathVariable("rt_id") int rt_id, Model model) {
         Rating rating = (Rating) this.ratingService.getRatingById(rt_id);
+        Map<Integer, String> selectMap = new LinkedHashMap<>();
+        selectMap.put(0, "Отсутствовал");
+        selectMap.put(1, "Присутствовал");
+        selectMap.put(2, "2");
+        selectMap.put(3, "3");
+        selectMap.put(4, "4");
+        selectMap.put(5, "5");
+        model.addAttribute("selectMap", selectMap);
         model.addAttribute("rating", rating);
         return "ratings";
     }

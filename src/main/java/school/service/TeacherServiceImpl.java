@@ -33,28 +33,24 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     private TRoleDao tRoleDao;
-
     @Autowired
     public void settRoleDao(TRoleDao tRoleDao) {
         this.tRoleDao = tRoleDao;
     }
 
     SchoolClassDao schoolClassDao;
-    @Autowired(required = true)
+    @Autowired
     public void setSchoolClassDao(SchoolClassDao schoolClassDao) {
         this.schoolClassDao = schoolClassDao;
     }
 
-
     private SchoolClassService schoolClassService;
-
     @Autowired(required = true)
     public void setSchoolClassService(SchoolClassService schoolClassService) {
         this.schoolClassService = schoolClassService;
     }
 
     private TeacherDao teacherDao;
-
     @Autowired
     public void setTeacherDao(TeacherDao teacherDao) {
         this.teacherDao = teacherDao;
@@ -66,19 +62,6 @@ public class TeacherServiceImpl implements TeacherService {
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void addTeacher(Teacher teacher) {
-
-//        List<TRole> roles = new ArrayList<>();
-//        roles.add(this.tRoleDao.getTRoleByName("ROLE_TEACHER"));
-//        teacher.setRoles(roles);
-//        System.out.println("************ФАБРИКА УЧИТЕЛЬСКИХ РОЛЕЙ ГОВОРИТ!***************");
-//        System.out.println(teacher.getRoles());
-//        System.out.println("************ФАБРИКА УЧИТЕЛЬСКИХ РОЛЕЙ НЕГОВОРИТ!***************");
-
-//        if (teacher.getSchoolClass() != null) {
-//            SchoolClass schoolClass = (SchoolClass) schoolClassService.getSchoolClassById(teacher.getSchoolClass().getClass_id());
-//            schoolClass.setTeacher(teacher);
-//            schoolClassService.updateSchoolClass(schoolClass);
-//        }
         this.teacherDao.addTeacher(teacher);
     }
 
@@ -86,12 +69,6 @@ public class TeacherServiceImpl implements TeacherService {
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateTeacher(Teacher teacher) {
-
-//        if (teacher.getSchoolClass() != null) {
-//            SchoolClass schoolClass = (SchoolClass) schoolClassService.getSchoolClassById(teacher.getSchoolClass().getClass_id());
-//            schoolClass.setTeacher(teacher);
-//            schoolClassService.updateSchoolClass(schoolClass);
-//        }
         this.teacherDao.updateTeacher(teacher);
     }
 

@@ -22,11 +22,8 @@ public class Subject {
     @Column(name = "subjectName", nullable = false)
     String sub_name;
 
-
-
     public Subject() {
     }
-
 
     public int getSub_id() {
         return sub_id;
