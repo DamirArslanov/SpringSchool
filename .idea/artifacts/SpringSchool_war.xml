@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="war" name="SpringSchool:war">
     <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="SpringSchool-1.0-SNAPSHOT.war">
+    <root id="archive" name="SpringSchool.war">
       <element id="artifact" artifact-name="SpringSchool:war exploded" />
     </root>
   </artifact>
