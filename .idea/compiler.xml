@@ -26,7 +26,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="SpringSchool" target="1.8" />
+      <module name="SpringSchool" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
