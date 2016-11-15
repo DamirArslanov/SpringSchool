@@ -16,6 +16,7 @@
         <property name="password" value="root" />
     </bean>
 
+    <beans profile="heroku">
     <!--HEROKU-->
     <bean class="java.net.URI" id="dbUrl">
         <constructor-arg value="#{systemEnvironment['DATABASE_URL']}"/>
@@ -26,6 +27,8 @@
         <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
         <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
     </bean>
+    </beans>
+
 
     <!-- Hibernate 5 SessionFactory Bean MYSQL-->
     <bean id="hibernate5AnnotatedSessionFactory"
