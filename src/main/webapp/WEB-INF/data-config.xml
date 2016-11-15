@@ -16,24 +16,13 @@
         <property name="password" value="root" />
     </bean>
 
-    <beans profile="heroku">
-    <!--HEROKU-->
-    <bean class="java.net.URI" id="dbUrl">
-        <constructor-arg value="#{systemEnvironment['DATABASE_URL']}"/>
-    </bean>
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + ':' + @dbUrl.getPort() + @dbUrl.getPath() }"/>
-        <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
-        <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
-    </bean>
-    </beans>
 
 
     <!-- Hibernate 5 SessionFactory Bean MYSQL-->
     <bean id="hibernate5AnnotatedSessionFactory"
           class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
+        <property name="dataSource" ref="dataSourceMySQL"/>
         <property name="annotatedClasses">
             <list>
                 <value>school.entity.Teacher</value>
@@ -53,9 +42,9 @@
         </property>
         <property name="hibernateProperties">
             <props>
-                <!--<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>-->
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
                 <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
             </props>
         </property>
