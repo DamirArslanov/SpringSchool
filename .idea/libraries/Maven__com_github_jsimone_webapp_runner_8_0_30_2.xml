@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.jsimone:webapp-runner:8.0.30.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/jsimone/webapp-runner/8.0.30.2/webapp-runner-8.0.30.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/jsimone/webapp-runner/8.0.30.2/webapp-runner-8.0.30.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/jsimone/webapp-runner/8.0.30.2/webapp-runner-8.0.30.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
