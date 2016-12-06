@@ -65,23 +65,45 @@
     </sec:authorize>
         <li style="float:right"><a href="<c:url value="/"/>">Главная страница</a></li>
 </ul>
+<%--<sec:authorize access="hasRole('ROLE_ADMIN')">--%>
+    <%--<div class="container">--%>
+        <%--<h1>Добавить предмет</h1>--%>
+        <%--<c:url var="addAction" value="/admin/subjects/add"/>--%>
+        <%--<form:form action="${addAction}" commandName="subject" class="form-inline">--%>
+            <%--<div class="form-group">--%>
+                <%--<form:label path="sub_name">--%>
+                    <%--Название предмета:--%>
+                <%--</form:label>--%>
+                    <%--<form:input path="sub_name"/>--%>
+            <%--</div>--%>
+            <%--<c:if test="${!empty subject.sub_name}">--%>
+                <%--<form:hidden path="sub_id"/>--%>
+            <%--</c:if>--%>
+        <%--<button type="submit" class="btn btn-default">Сохранить</button>--%>
+        <%--</form:form>--%>
+        <%--<form:errors path="sub_name" cssclass="error"/>--%>
+    <%--</div>--%>
+<%--</sec:authorize>--%>
 <sec:authorize access="hasRole('ROLE_ADMIN')">
-    <div class="container">
-        <h1>Добавить предмет</h1>
-        <c:url var="addAction" value="/admin/subjects/add"/>
-        <form:form action="${addAction}" commandName="subject" class="form-inline">
-            <div class="form-group">
-                <form:label path="sub_name">
-                    Название предмета:
-                </form:label>
-                    <form:input path="sub_name"/>
-            </div>
-            <c:if test="${!empty subject.sub_name}">
-                <form:hidden path="sub_id"/>
-            </c:if>
-        <button type="submit" class="btn btn-default">Сохранить</button>
-        </form:form>
-    </div>
+    <c:url var="addAction" value="/admin/subjects/add"/>
+    <form:form action="${addAction}" commandName="subject" class="form-inline">
+        <table>
+            <tr>
+                <th>Название предмета:  </th>
+                <td><form:input path="sub_name"/></td>
+                <td><button type="submit" class="btn btn-default">Сохранить</button></td>
+                <c:if test="${!empty subject.sub_name}">
+                    <form:hidden path="sub_id"/>
+                </c:if>
+            </tr>
+            <tr>
+                <th>&nbsp;</th>
+                <td>
+                    <form:errors path="sub_name" cssclass="error"/>
+                </td>
+            </tr>
+        </table>
+    </form:form>
 </sec:authorize>
 <h1>Предметы</h1>
 <c:if test="${!empty listSubjects}">

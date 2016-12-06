@@ -21,22 +21,22 @@ public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lessonId", unique = true, nullable = false)
-    int less_id;
+    private int less_id;
 
     @Temporal(TemporalType.TIMESTAMP)
 //    @DateTimeFormat(pattern="dd.MM.yyyy HH:mm:ss")
     @Column(name = "lessonDate", nullable = false)
-    Date less_Date;
+    private Date less_Date;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "scheduleId")
-    Schedule schedule;
+    private Schedule schedule;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "lesson")
-    List<Rating> ratingList;
+    private List<Rating> ratingList;
 
     @Column(name = "description")
-    String description;
+    private String description;
 
     @Transient
     private Map<Integer, String> ratingMap;

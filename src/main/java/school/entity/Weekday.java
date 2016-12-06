@@ -17,11 +17,11 @@ public class Weekday {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "weekdayId", unique = true, nullable = false)
-    int week_id;
+    private int week_id;
 
     @Column(name = "weekdayName", nullable = false)
     @NotNull
-    String week_name;
+    private String week_name;
 
     public Weekday() {
     }

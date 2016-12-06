@@ -15,10 +15,10 @@ public class LessonTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "timeID", unique = true, nullable = false)
-    int timeID;
+    private int timeID;
 
     @Column(name = "time", nullable = false)
-    String time;
+    private String time;
 
     public LessonTime() {
     }

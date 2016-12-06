@@ -17,24 +17,24 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "parentId", unique = true, nullable = false)
-    int parentId;
+    private int parentId;
 
     @Column(name = "parentName")
-    String parentName;
+    private String parentName;
 
 
     @Column(name = "parentSurname")
-    String parentSurname;
+    private String parentSurname;
 
     @Column(name = "parenPname")
-    String parenPname;
+    private String parenPname;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chId")
-    Children children;
+    private Children children;
 
     @Column(name = "phoneParent")
-    String parentPhone;
+    private String parentPhone;
 
     @Column(name = "username")
     private String username;

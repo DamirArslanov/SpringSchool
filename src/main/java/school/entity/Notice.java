@@ -17,23 +17,23 @@ public class Notice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "noticeId", unique = true, nullable = false)
-    int noticeID;
+    private int noticeID;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern="dd.MM.yyyy")
     @Column(name = "noticeDate", nullable = false)
-    Date noticeDate;
+    private Date noticeDate;
 
     @Column(name = "message", nullable = false)
-    String message;
+    private String message;
 
     @ManyToOne(fetch = FetchType.LAZY, optional=true)
     @JoinTable(name = "noticeClassLink", joinColumns = @JoinColumn(name = "noticeId"), inverseJoinColumns = @JoinColumn(name = "classId"))
-    SchoolClass schoolClass;
+    private SchoolClass schoolClass;
 
     @ManyToOne(fetch = FetchType.LAZY, optional=true)
     @JoinTable(name = "noticeTeacherLink", joinColumns = @JoinColumn(name = "noticeId"), inverseJoinColumns = @JoinColumn(name = "teacherId"))
-    Teacher teacher;
+    private Teacher teacher;
 
     public Notice() {
     }

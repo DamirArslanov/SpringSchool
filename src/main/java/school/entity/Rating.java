@@ -17,28 +17,28 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ratingId", unique = true, nullable = false)
-    int rt_id;
+    private int rt_id;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern="dd.MM.yyyy")
     @Column(name = "ratingDate", nullable = false)
-    Date rt_Date;
+    private Date rt_Date;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chId", nullable = false)
-    Children children;
+    private Children children;
 
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subjectId", nullable = false)
-    Subject subject;
+    private Subject subject;
 
     @Column(name = "evaluation", nullable = false)
-    int evaluation;
+    private int evaluation;
 
     @ManyToOne(fetch = FetchType.LAZY,optional=true)
     @JoinTable(name = "lessonRatings", joinColumns = @JoinColumn(name = "ratingId"), inverseJoinColumns = @JoinColumn(name = "lessonId"))
-    Lesson lesson;
+    private Lesson lesson;
 
 
     public Rating() {

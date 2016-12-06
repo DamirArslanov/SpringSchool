@@ -1,7 +1,10 @@
 package school.utils;
 
+import com.google.gson.Gson;
 import org.springframework.stereotype.Component;
 import school.entity.Schedule;
+import school.entity.Teacher;
+import school.entity.Weekday;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -108,9 +111,13 @@ public class DateUtil {
     }
 
     public static void main(String[] args) {
-        DateUtil dateUtil = new DateUtil();
-        System.out.println(dateUtil.giveMeThisWeekDays());
+        Teacher teacher = new Teacher();
+        teacher.setPassword("32423");
+        teacher.setUsername("teacheruser");
 
+
+        Gson gson = new Gson();
+        System.out.println(gson.toJson(teacher));
     }
 
 

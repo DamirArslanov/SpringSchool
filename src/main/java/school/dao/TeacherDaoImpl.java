@@ -141,8 +141,7 @@ public class TeacherDaoImpl implements TeacherDao {
         String hql = "FROM Teacher teacher WHERE teacher.schoolClass.class_id = (:id)";
         Query query = session.createQuery(hql).setParameter("id", id);
 
-        //Пока я не понял, почему возникает ошибка если пытаюсь скастовать
-        // одиночного учителя сразу же после его получения из запроса
+
         List<Teacher> teacherList = query.list();
         return teacherList;
     }

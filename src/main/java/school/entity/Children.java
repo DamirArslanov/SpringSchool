@@ -20,46 +20,46 @@ public class Children {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chId", unique = true, nullable = false)
-    int ch_id;
+    private int ch_id;
 
 
     @Column(name = "chName", nullable = false)
     @NotNull
-    String ch_name;
+    private String ch_name;
 
     @Size(min=1, max=20,
             message="Фамилия должна содержать хотя бы один символ!")
     @Column(name = "chSurname", nullable = false)
-    String ch_surname;
+    private String ch_surname;
 
     @Column(name = "chPname", nullable = false)
-    String ch_Pname;
+    private String ch_Pname;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern="dd.MM.yyyy")
     @Column(name = "birthDate", nullable = false)
-    Date birthDate;
+    private Date birthDate;
 
     @Column(name = "childrenAnddress")
-    String address;
+    private String address;
 
     @Column(name = "childrenPhone")
-    String phone;
+    private String phone;
 
 
 
     @ManyToOne(fetch = FetchType.LAZY,optional=true)
     @JoinTable(name = "class", joinColumns = @JoinColumn(name = "ch_id"), inverseJoinColumns = @JoinColumn(name = "class_id"))
-    SchoolClass schoolClass;
+    private SchoolClass schoolClass;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacherId")
-    Teacher teacher;
+    private Teacher teacher;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parentId")
-    User parent;
+    private User parent;
 
     @Transient
     private String FIO;

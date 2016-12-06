@@ -4,6 +4,7 @@ package school.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import school.entity.Subject;
 import school.service.interfaces.SubjectService;
 
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -42,6 +44,7 @@ public class SubjectController {
 
     @RequestMapping(value = "/admin/subjects/add", method = RequestMethod.POST)
     public String addSubject(@ModelAttribute("subject") Subject subject) {
+
         if (subject.getSub_id() == 0) {
             this.subjectService.addSubject(subject);
         }else {

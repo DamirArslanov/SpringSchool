@@ -15,28 +15,28 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "scheduleId", unique = true, nullable = false)
-    int shed_id;
+    private int shed_id;
 
 
     @Column(name = "time", nullable = false)
-    String time;
+    private String time;
 
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "weekdayId", nullable = false)
-    Weekday weekday;
+    private  Weekday weekday;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subjectId", nullable = false)
-    Subject subject;
+    private  Subject subject;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "classId", nullable = false)
-    SchoolClass schoolClass;
+    private  SchoolClass schoolClass;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacherId", nullable = false)
-    Teacher teacher;
+    private Teacher teacher;
 
     public Schedule() {
     }

@@ -16,14 +16,14 @@ public class Image {
     @Id
     @Column(name = "imgID", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @Column(name = "imgName")
-    String name;
+    private String name;
 
     @Column(name = "imgContent")
     @Lob
-    Blob content;
+    private Blob content;
 
     @Column(name="CONTENTTYPE")
     private String contentType;

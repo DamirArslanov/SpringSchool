@@ -17,20 +17,20 @@ public class SchoolClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "classId", unique = true, nullable = false)
-    int class_id;
+    private int class_id;
 
     @Column(name = "className", nullable = false)
-    String class_name;
+    private  String class_name;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacherId")
-    Teacher teacher;
+    private Teacher teacher;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "schoolClass")
-    List<Children> childrenList;
+    private List<Children> childrenList;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "schoolClass")
-    List<Notice> notices;
+    private List<Notice> notices;
 
     public SchoolClass() {
     }
