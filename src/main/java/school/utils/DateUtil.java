@@ -110,15 +110,6 @@ public class DateUtil {
         return dates;
     }
 
-    public static void main(String[] args) {
-        Teacher teacher = new Teacher();
-        teacher.setPassword("32423");
-        teacher.setUsername("teacheruser");
-
-
-        Gson gson = new Gson();
-        System.out.println(gson.toJson(teacher));
-    }
 
 
     //Метод возвращает массив с датами нынешней или следующей недели
