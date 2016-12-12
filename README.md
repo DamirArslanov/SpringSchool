@@ -9,7 +9,7 @@
 + Возможность просматривать оценки ученика ('ROLE_ADMIN', 'ROLE_TEACHER' => ALLChildren, 'ROLE-USER' => if (Parent = Children);
 + Генерация username/password для Parent при создании Children.
 
-Классы:
+Сущности:
 
 + Children - Ученик, содержит ссылку на свой класс (SchoolClass), классного руководителя (Teacher), Родителя (User) - генерируется на основе Children
 + Image - Обычное изображение, фотография, сохраняется в БД.
